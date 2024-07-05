@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://d0f3x37aawfpu"]
+
+[ext_resource type="PackedScene" uid="uid://b8i2al5jacohu" path="res://ScenesAndScripts/world.tscn" id="1_afrpm"]
+
+[node name="main" type="Node3D"]
+
+[node name="World" parent="." instance=ExtResource("1_afrpm")]
+
+[node name="Camera3D" type="Camera3D" parent="World"]
+transform = Transform3D(1, 0, 0, 0, 0.150847, 0.988557, 0, -0.988557, 0.150847, 0, 3.137, 0.889309)
