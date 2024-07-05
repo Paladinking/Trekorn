@@ -29,6 +29,8 @@ misc/hooks/pre-commit-custom-*
 ### Godot generated files ###
 #############################
 
+.godot
+
 # Buildsystem
 bin
 *.gen.*
