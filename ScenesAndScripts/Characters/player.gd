@@ -51,16 +51,15 @@ func _physics_process(delta):
 			velocity.y = JUMP_VELOCITY
 
 		elif is_on_wall_only():
-			if Input.is_action_pressed("jump"):
-				jumping = MAX_JUMP_TIME
-				var collision : KinematicCollision3D = get_last_slide_collision()
-				var jump_direction = collision.get_position().direction_to(global_position)
-				jump_direction.y = 0
-				jump_direction = jump_direction.normalized() * 0.5
-				if jump_direction.dot(direction) > 0:
-					jump_direction = direction
-				velocity += jump_direction * JUMP_VELOCITY
-				velocity.y = JUMP_VELOCITY
+			jumping = MAX_JUMP_TIME
+			var collision : KinematicCollision3D = get_last_slide_collision()
+			var jump_direction = collision.get_position().direction_to(global_position)
+			jump_direction.y = 0
+			jump_direction = jump_direction.normalized() * 0.5
+			if jump_direction.dot(direction) > 0:
+				jump_direction = direction
+			velocity += jump_direction * JUMP_VELOCITY
+			velocity.y = JUMP_VELOCITY
 
 	if not is_on_floor():
 		velocity.y -= gravity * delta
@@ -75,7 +74,7 @@ func _physics_process(delta):
 		else:
 			jumping = 0.0
 
-	$Model.rotation.y = -velocity.signed_angle_to(Vector3.RIGHT, Vector3.UP)
+	$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
 	#if velocity.is_zero_approx():
 		#$Model/AnimationPlayer.play("Idle")
 
