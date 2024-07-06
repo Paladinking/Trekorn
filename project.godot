@@ -26,6 +26,10 @@ mouse_cursor/custom_image="res://Assets/Images/MouseCursor.png"
 
 project/assembly_name="Trekorn"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/jigglebones/plugin.cfg")
+
 [input]
 
 go_forward={
