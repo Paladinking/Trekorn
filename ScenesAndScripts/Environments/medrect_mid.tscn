@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dbc6jf6wnafeq"]
 
-[ext_resource type="Script" path="res://ScenesAndScripts/Environment/block.gd" id="1_ynono"]
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/block.gd" id="1_ynono"]
 [ext_resource type="PackedScene" uid="uid://brpr6o1ge4au8" path="res://Assets/Buildings/TempBlockout/medrect_mid_1.glb" id="3_2dj66"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jnfjf"]

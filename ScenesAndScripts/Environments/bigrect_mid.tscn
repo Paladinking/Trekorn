@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://duaqhqwpsuj22"]
 
 [ext_resource type="PackedScene" uid="uid://dltlw6p78v38o" path="res://Assets/Buildings/TempBlockout/bigrect_mid_1.glb" id="1_q5aid"]
-[ext_resource type="Script" path="res://ScenesAndScripts/Environment/block.gd" id="1_wb414"]
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/block.gd" id="1_wb414"]
 [ext_resource type="PackedScene" uid="uid://bnfarhfdmgewn" path="res://Assets/Buildings/TempBlockout/bigrect_mid_2.glb" id="2_kagas"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7wc8s"]
