@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://duaqhqwpsuj22"]
+
+[ext_resource type="PackedScene" uid="uid://dltlw6p78v38o" path="res://Assets/Buildings/TempBlockout/bigrect_mid_1.glb" id="1_q5aid"]
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/Blocks/block.gd" id="1_wb414"]
+[ext_resource type="PackedScene" uid="uid://bnfarhfdmgewn" path="res://Assets/Buildings/TempBlockout/bigrect_mid_2.glb" id="2_kagas"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7wc8s"]
+size = Vector3(10, 4, 5)
+
+[node name="BigrectMid" type="Node3D"]
+script = ExtResource("1_wb414")
+metadata/Rect = [ExtResource("1_q5aid"), ExtResource("2_kagas")]
+
+[node name="default" parent="." instance=ExtResource("1_q5aid")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_7wc8s")

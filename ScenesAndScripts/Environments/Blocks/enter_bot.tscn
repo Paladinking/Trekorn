@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cos5udjcpiqn0"]
+
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/Blocks/block.gd" id="1_bwdpt"]
+[ext_resource type="PackedScene" uid="uid://bcyu7asndk7xc" path="res://Assets/Buildings/TempBlockout/enter_bot_1.glb" id="3_4ljt1"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jnfjf"]
+size = Vector3(7.5, 4, 7.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3nko4"]
+size = Vector3(5, 4, 2.5)
+
+[node name="EnterBot" type="Node3D"]
+script = ExtResource("1_bwdpt")
+metadata/Rect = [ExtResource("3_4ljt1")]
+
+[node name="default" parent="." instance=ExtResource("3_4ljt1")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 1.25)
+shape = SubResource("BoxShape3D_jnfjf")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.25, 2, -3.75)
+shape = SubResource("BoxShape3D_3nko4")

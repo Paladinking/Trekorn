@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://d64a5ctc58gy"]
+
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/Blocks/block.gd" id="1_agmep"]
+[ext_resource type="PackedScene" uid="uid://loq3ccjuxp20" path="res://Assets/Buildings/TempBlockout/corner90_top_1.glb" id="3_vacbg"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_h3kct"]
+points = PackedVector3Array(-2.5, 0, -2.5, -2.5, 0, 2.49944, -2.5, 0.171894, -2.5, 2.5, 0, 2.49944, -2.5, 0.171894, 2.49944, 2.5, 0.171894, 2.49944)
+
+[node name="Corner90Top" type="Node3D"]
+script = ExtResource("1_agmep")
+metadata/Rect = [ExtResource("3_vacbg")]
+
+[node name="default" parent="." instance=ExtResource("3_vacbg")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_h3kct")
+
+[editable path="default"]

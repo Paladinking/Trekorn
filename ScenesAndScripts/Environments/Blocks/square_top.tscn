@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bu2f1qy4iyfxf"]
+
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/Blocks/block.gd" id="1_0hshq"]
+[ext_resource type="PackedScene" uid="uid://udgaof474dtp" path="res://Assets/Buildings/TempBlockout/square_top_2.glb" id="3_as3bu"]
+[ext_resource type="PackedScene" uid="uid://n5ps4v4n1ygy" path="res://Assets/Buildings/TempBlockout/square_top_1.glb" id="3_qn3xe"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jnfjf"]
+size = Vector3(5, 0.4, 5)
+
+[node name="SquareTop" type="Node3D"]
+script = ExtResource("1_0hshq")
+metadata/Rect = [ExtResource("3_qn3xe"), ExtResource("3_as3bu")]
+
+[node name="default" parent="." instance=ExtResource("3_qn3xe")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+shape = SubResource("BoxShape3D_jnfjf")
