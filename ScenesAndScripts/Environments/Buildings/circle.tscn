@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://bdshivpgppjoj"]
+
+[ext_resource type="PackedScene" uid="uid://bioekcb48opv7" path="res://ScenesAndScripts/Environments/ModularBlocks/curve45.tscn" id="1_i5ge2"]
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/ModularBlocks/modular_block.gd" id="1_wkweh"]
+
+[node name="Circle" type="Node3D"]
+script = ExtResource("1_wkweh")
+size = 3
+
+[node name="Curve45" parent="." instance=ExtResource("1_i5ge2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.4688, 0, -5.74259)
+size = 3
+
+[node name="Curve46" parent="." instance=ExtResource("1_i5ge2")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, 12.9888, 0, 4.75741)
+size = 3
+
+[node name="Curve47" parent="." instance=ExtResource("1_i5ge2")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5.93184, 0, 12.5494)
+size = 3
+
+[node name="Curve48" parent="." instance=ExtResource("1_i5ge2")]
+transform = Transform3D(-0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, -0.707107, -4.56816, 0, 13.0694)
+size = 3
+
+[node name="Curve49" parent="." instance=ExtResource("1_i5ge2")]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, -12.3602, 0, 6.01241)
+size = 3
+
+[node name="Curve50" parent="." instance=ExtResource("1_i5ge2")]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -12.8802, 0, -4.48759)
+size = 3
+
+[node name="Curve51" parent="." instance=ExtResource("1_i5ge2")]
+transform = Transform3D(1.19249e-08, 0, 1, 0, 1, 0, -1, 0, 1.19249e-08, -5.82316, 0, -12.2796)
+size = 3
+
+[node name="Curve52" parent="." instance=ExtResource("1_i5ge2")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, 4.67684, 0, -12.7996)
+size = 3
