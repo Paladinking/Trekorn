@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://wfavnk7adtlo"]
+
+[ext_resource type="Script" path="res://ScenesAndScripts/Environment/block.gd" id="1_pwer8"]
+[ext_resource type="PackedScene" uid="uid://cql25muvjl4r5" path="res://Assets/Buildings/TempBlockout/medrect_bot_1.glb" id="3_546hl"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_jnfjf"]
+size = Vector3(7.5, 4, 5)
+
+[node name="MedrectBot" type="Node3D"]
+script = ExtResource("1_pwer8")
+metadata/Rect = [ExtResource("3_546hl")]
+
+[node name="default" parent="." instance=ExtResource("3_546hl")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("BoxShape3D_jnfjf")
