@@ -57,7 +57,7 @@ func _physics_process(delta):
 	
 	if is_climbing and wall_normal.dot($Camera.get_global_transform().basis.z) > 0.5:
 		var side_of_wall = sign(wall_normal.dot($Camera.get_global_transform().basis.z))
-		direction = (transform.basis * Vector3(-input_dir.x * side_of_wall, 0, -input_dir.y))
+		direction = (Basis(wall_normal.cross(Vector3(0,1,0)), Vector3(0,1,0), wall_normal) * Vector3(-input_dir.x * side_of_wall, 0, input_dir.y))
 		pass
 	
 	var current_speed = SPEED
