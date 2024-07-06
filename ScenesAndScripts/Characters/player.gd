@@ -20,6 +20,7 @@ var last_collision_direction : Vector3 = Vector3.ZERO
 #const CAMERA_MOVE_SPEED = 5
 const CAMERA_MOVE_SPEED = 2.5
 const CAMERA_MAX_DISTANCE = 10
+const SHOULDER_MAX_DISTANCE = 3
 var camera_target_position = Vector3(0, 1.5, 0)
 const CAMERA_WALL_SAFETY_DIST = 1
 var camera_angle_y = 0
@@ -28,6 +29,7 @@ const CAMERA_ANGLE_X_MAX = deg_to_rad(179)
 const CAMERA_ANGLE_X_MIN = deg_to_rad(45)
 
 var shoot_cooldown: float = 0.0
+var shoulder_cam: bool = false
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -41,6 +43,8 @@ func _ready():
 	$Camera.position = Vector3(sin(camera_angle_y), camera_angle_x, cos(camera_angle_y)) * CAMERA_MAX_DISTANCE
 	$Camera.look_at(global_position + camera_target_position)
 	$CameraRay.target_position = $Camera.position
+	$Model/AnimationPlayer.play("run")
+	$Model/AnimationPlayer.pause()
 
 
 func _physics_process(delta):
@@ -55,7 +59,7 @@ func _physics_process(delta):
 	elif Input.is_action_pressed("slow"):
 		current_speed *= SLOW_DOWN_MULT
 	velocity = velocity.move_toward(direction * current_speed, delta * current_acceleration)
-	if not direction.is_zero_approx():
+	if not direction.is_zero_approx() and not shoulder_cam:
 		$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.FORWARD, Vector3.UP)
 
 	if is_on_wall_only():
@@ -82,7 +86,9 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor() and not is_climbing:
-			jumping = MAX_JUMP_TIME
+			$Model/AnimationPlayer.stop(true)
+			$Model/AnimationPlayer.play("running_jump")
+			jump_time = MAX_JUMP_TIME
 			velocity.y = JUMP_VELOCITY
 		else:
 			jump_press_time = WALL_JUMP_MARGIN
@@ -90,6 +96,8 @@ func _physics_process(delta):
 		jump_press_time -= delta
 
 	if wall_jump_time > 0 and jump_press_time > 0:
+		$Model/AnimationPlayer.stop(true)
+		$Model/AnimationPlayer.play("wall_jump")
 		wall_jump_time = 0
 		jump_press_time = 0
 		jump_time = MAX_JUMP_TIME
@@ -101,9 +109,12 @@ func _physics_process(delta):
 		velocity.y = JUMP_VELOCITY
 		$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
 
+		if not shoulder_cam:
+			$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
+
 	if not is_on_floor() and not is_climbing:
 		velocity.y -= gravity * delta
-
+		
 	if jump_time > 0.0:
 		if Input.is_action_pressed("jump"):
 			jump_time -= delta
@@ -115,6 +126,13 @@ func _physics_process(delta):
 			jump_time = 0.0
 			if velocity.y > 0:
 				velocity.y *= 0.5
+
+	if is_on_floor():
+		if velocity.y == 0 and not velocity.is_zero_approx():
+			$Model/AnimationPlayer.play("run")
+	else:
+		#$Model/AnimationPlayer.pause()
+		velocity.y -= gravity * delta
 
 	move_and_slide()
 
@@ -133,28 +151,42 @@ func _process(delta):
 
 	#var rot_y = CAMERA_POSITION.rotated(Vector3.UP, camera_angle_y)
 	#$Camera.position = rot_y.rotated(Vector3.UP.cross(rot_y).normalized(), camera_angle_x)
+	var max_dist = CAMERA_MAX_DISTANCE
+	if shoulder_cam:
+		max_dist = SHOULDER_MAX_DISTANCE
+		$CameraRay.position = Vector3(0.8, 1.5, 0).rotated(Vector3.UP, $Model.rotation.y)
+		camera_target_position = Vector3(0.8, 1.5, 0).rotated(Vector3.UP, $Model.rotation.y)
+	else:
+		$CameraRay.position = Vector3(0, 1.5, 0)
+		camera_target_position = Vector3(0, 1.5, 0)
+	
 	var camera_position = Vector3(
 		sin(camera_angle_x) * sin(camera_angle_y),
 		-cos(camera_angle_x),
 		sin(camera_angle_x) * cos(camera_angle_y)
-	) * CAMERA_MAX_DISTANCE
+	) * max_dist
+	if shoulder_cam:
+		camera_position += Vector3(1, 0, 0).rotated(Vector3.UP, $Model.rotation.y)
 	$Camera.position = camera_position
 	$Camera.look_at(global_position + camera_target_position)
 	$CameraRay.target_position = camera_position
 
 	if $CameraRay.is_colliding():
 		var camera_ray_collision_distance = $CameraRay.position.distance_to($CameraRay.get_collision_point() - $CameraRay.global_position + $CameraRay.position)
-		if camera_ray_collision_distance < CAMERA_MAX_DISTANCE:
-			var to_move_camera = CAMERA_MAX_DISTANCE - camera_ray_collision_distance
-			to_move_camera += CAMERA_WALL_SAFETY_DIST * (1 - (CAMERA_MAX_DISTANCE - (to_move_camera + CAMERA_WALL_SAFETY_DIST)) / CAMERA_MAX_DISTANCE)
+		if camera_ray_collision_distance < max_dist:
+			var to_move_camera = max_dist - camera_ray_collision_distance
+			to_move_camera += CAMERA_WALL_SAFETY_DIST * (1 - (max_dist - (to_move_camera + CAMERA_WALL_SAFETY_DIST)) / max_dist)
 			$Camera.position = $Camera.position.move_toward(camera_target_position, to_move_camera)
 
-			if CAMERA_MAX_DISTANCE - to_move_camera < CAMERA_WALL_SAFETY_DIST:
+			if max_dist - to_move_camera < CAMERA_WALL_SAFETY_DIST:
 				$Model.hide()
 			elif not $Model.is_visible_in_tree():
 				$Model.show()
 	elif not $Model.is_visible_in_tree():
 		$Model.show()
+
+	if shoulder_cam:
+		$Model.rotation.y = camera_angle_y
 		
 	if $Model/LowerClimbRay.is_colliding():
 		print("Collission Lower")
@@ -170,9 +202,11 @@ func _process(delta):
 	shoot_cooldown -= delta
 		
 #var p = false
+func _input(event):
+	if event is InputEventMouseMotion:
+		camera_angle_x += event.relative.y / 200
+		camera_angle_y -= event.relative.x / 200
 
 func _unhandled_key_input(event):
-	#if event.is_pressed() and event.physical_keycode == KEY_P:
-		#p = !p
-		#print(p)
-	pass
+	if event.is_pressed() and event.physical_keycode == KEY_P:
+		shoulder_cam = not shoulder_cam
