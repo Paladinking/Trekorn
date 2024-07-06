@@ -19,8 +19,7 @@ const WALL_JUMP_MARGIN = 0.25
 var wall_jump_time = 0.0
 var last_collision_direction : Vector3 = Vector3.ZERO
 
-#const CAMERA_MOVE_SPEED = 5
-const CAMERA_MOVE_SPEED = 2.5
+const CAMERA_MOVE_SPEED = 5
 const CAMERA_MAX_DISTANCE = 10
 const SHOULDER_MAX_DISTANCE = 3
 var camera_target_position = Vector3(0, 1.5, 0)
@@ -50,6 +49,9 @@ func _ready():
 
 
 func _physics_process(delta):
+	if Input.is_action_just_pressed("aim"):
+		shoulder_cam = not shoulder_cam
+
 	var input_dir = Input.get_vector("go_left", "go_right", "go_forward", "go_backward")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).rotated(Vector3.UP, camera_angle_y)
 	
@@ -83,9 +85,8 @@ func _physics_process(delta):
 	elif not last_collision_direction.is_zero_approx():
 		last_collision_direction = Vector3.ZERO
 
-	
 	ledge_in_front = false
-	if $Model/LowerClimbRay.is_colliding() and !$Model/UpperClimbRay.is_colliding():
+	if $Model/LowerClimbRay.is_colliding() and not $Model/UpperClimbRay.is_colliding():
 		ledge_in_front = true
 
 	if ledge_in_front and not is_on_floor():
@@ -203,10 +204,10 @@ func _process(delta):
 	if shoulder_cam:
 		$Model.rotation.y = camera_angle_y
 		
-	if $Model/LowerClimbRay.is_colliding():
-		print("Collission Lower")
-	if $Model/UpperClimbRay.is_colliding():
-		print("Collission upper")
+	#if $Model/LowerClimbRay.is_colliding():
+		#print("Collission Lower")
+	#if $Model/UpperClimbRay.is_colliding():
+		#print("Collission upper")
 	if Input.is_action_pressed("shoot") and shoot_cooldown <= 0:
 		var b = bullet.instantiate()
 		var dir: Vector3 = -$Model.global_basis.z
@@ -223,5 +224,6 @@ func _input(event):
 		camera_angle_y -= event.relative.x / 200
 
 func _unhandled_key_input(event):
-	if event.is_pressed() and event.physical_keycode == KEY_P:
-		shoulder_cam = not shoulder_cam
+	#if event.is_pressed() and event.physical_keycode == KEY_P:
+		#shoulder_cam = not shoulder_cam
+	pass
