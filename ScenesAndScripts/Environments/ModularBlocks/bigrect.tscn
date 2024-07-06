@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://cx2024ts6gqsk"]
+
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/ModularBlocks/modular_block.gd" id="1_cbyvf"]
+[ext_resource type="PackedScene" uid="uid://duaqhqwpsuj22" path="res://ScenesAndScripts/Environments/Blocks/bigrect_mid.tscn" id="2_n4bx7"]
+[ext_resource type="PackedScene" uid="uid://dl1nn7wab5hge" path="res://ScenesAndScripts/Environments/Blocks/bigrect_top.tscn" id="3_12fyk"]
+[ext_resource type="PackedScene" uid="uid://b17dkh60uw0f3" path="res://ScenesAndScripts/Environments/Blocks/bigrect_bot.tscn" id="4_f4y7j"]
+
+[node name="Bigrect" type="Node3D"]
+script = ExtResource("1_cbyvf")
+metadata/Block = ExtResource("2_n4bx7")
+
+[node name="top" parent="." instance=ExtResource("3_12fyk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+
+[node name="bot" parent="." instance=ExtResource("4_f4y7j")]
+
+[node name="middle" type="Node3D" parent="."]

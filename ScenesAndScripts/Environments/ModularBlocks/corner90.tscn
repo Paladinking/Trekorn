@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://dutx5l4hn3d0f"]
+
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/ModularBlocks/modular_block.gd" id="1_1vgha"]
+[ext_resource type="PackedScene" uid="uid://indmq7g8ugvv" path="res://ScenesAndScripts/Environments/Blocks/corner90_bot.tscn" id="2_aas0j"]
+[ext_resource type="PackedScene" uid="uid://d64a5ctc58gy" path="res://ScenesAndScripts/Environments/Blocks/corner90_top.tscn" id="3_np3ll"]
+
+[node name="Corner90" type="Node3D"]
+script = ExtResource("1_1vgha")
+metadata/Block = ExtResource("2_aas0j")
+
+[node name="top" parent="." instance=ExtResource("3_np3ll")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+
+[node name="bot" parent="." instance=ExtResource("2_aas0j")]
+
+[node name="middle" type="Node3D" parent="."]

@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://d2mxwbon48ct"]
+
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/ModularBlocks/modular_block.gd" id="1_p6s8u"]
+[ext_resource type="PackedScene" uid="uid://brujbeqs84x4f" path="res://ScenesAndScripts/Environments/Blocks/enter_mid.tscn" id="2_cm1lp"]
+[ext_resource type="PackedScene" uid="uid://cqoec7nkwgvw1" path="res://ScenesAndScripts/Environments/Blocks/enter_top.tscn" id="3_hvtnl"]
+[ext_resource type="PackedScene" uid="uid://cos5udjcpiqn0" path="res://ScenesAndScripts/Environments/Blocks/enter_bot.tscn" id="4_xrpxi"]
+
+[node name="Enter" type="Node3D"]
+script = ExtResource("1_p6s8u")
+metadata/Block = ExtResource("2_cm1lp")
+
+[node name="top" parent="." instance=ExtResource("3_hvtnl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+
+[node name="bot" parent="." instance=ExtResource("4_xrpxi")]
+
+[node name="middle" type="Node3D" parent="."]

@@ -1,0 +1,57 @@
+[gd_scene load_steps=11 format=3 uid="uid://b15weq2cvwlki"]
+
+[ext_resource type="Shader" uid="uid://bciiijteqacrd" path="res://ScenesAndScripts/snow_material.tres" id="1_cw86y"]
+[ext_resource type="Script" path="res://ScenesAndScripts/snow.gd" id="2_2f6dx"]
+[ext_resource type="Texture2D" uid="uid://b7cpfljchh1b8" path="res://mask.png" id="2_iqofy"]
+[ext_resource type="Shader" uid="uid://cq8u1rv878qa6" path="res://ScenesAndScripts/snow_emitter.tres" id="2_u1mp5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wvmek"]
+render_priority = 0
+shader = ExtResource("1_cw86y")
+shader_parameter/Mask = ExtResource("2_iqofy")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k6c10"]
+shader = ExtResource("2_u1mp5")
+shader_parameter/wind_dir = Vector3(0, -0.895, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_qgxj5"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ikogu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_11ddh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bdaqj"]
+albedo_color = Color(0.440383, 0.423006, 0.768973, 1)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05432, 0.0826805)
+material_override = SubResource("ShaderMaterial_wvmek")
+amount = 32
+lifetime = 5.0
+process_material = SubResource("ShaderMaterial_k6c10")
+draw_pass_1 = SubResource("QuadMesh_qgxj5")
+script = ExtResource("2_2f6dx")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.26064, -1.71139, 1.98559)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_ikogu")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 8.69458)
+current = true
+
+[node name="StaticBody3D2" type="StaticBody3D" parent="."]
+transform = Transform3D(16.21, 0, 0, 0, 9.12, 0, 0, 0, 1.465, 0, 0, -8.7287)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
+shape = SubResource("BoxShape3D_11ddh")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D2"]
+material = SubResource("StandardMaterial3D_bdaqj")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.16536, -0.262653, 2.65938)

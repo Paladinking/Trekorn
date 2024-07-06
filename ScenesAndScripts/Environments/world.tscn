@@ -1,6 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://b8i2al5jacohu"]
+[gd_scene load_steps=10 format=3 uid="uid://b8i2al5jacohu"]
 
-[ext_resource type="PackedScene" uid="uid://b223a2ai2d6bq" path="res://ScenesAndScripts/Environments/tall_square.tscn" id="1_6my8j"]
+[ext_resource type="PackedScene" uid="uid://b223a2ai2d6bq" path="res://ScenesAndScripts/Environments/ModularBlocks/square.tscn" id="1_5df2j"]
+[ext_resource type="PackedScene" uid="uid://cx2024ts6gqsk" path="res://ScenesAndScripts/Environments/ModularBlocks/bigrect.tscn" id="2_h0nmp"]
+[ext_resource type="PackedScene" uid="uid://c54kk7ra8cv2u" path="res://ScenesAndScripts/Environments/ModularBlocks/medrect.tscn" id="3_u71au"]
+[ext_resource type="PackedScene" uid="uid://d2mxwbon48ct" path="res://ScenesAndScripts/Environments/ModularBlocks/enter.tscn" id="4_5l2kr"]
+[ext_resource type="PackedScene" uid="uid://bioekcb48opv7" path="res://ScenesAndScripts/Environments/ModularBlocks/curve45.tscn" id="5_dlhbm"]
+[ext_resource type="PackedScene" uid="uid://dutx5l4hn3d0f" path="res://ScenesAndScripts/Environments/ModularBlocks/corner90.tscn" id="6_d5l86"]
+[ext_resource type="PackedScene" uid="uid://bdshivpgppjoj" path="res://ScenesAndScripts/Environments/Buildings/circle.tscn" id="7_5m24u"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0mwd8"]
 size = Vector3(5, 0.5, 5)
@@ -25,5 +31,35 @@ transform = Transform3D(0.965926, 0.25, -0.0669873, 0, 0.258819, 0.965926, 0.258
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldFloor"]
 shape = SubResource("WorldBoundaryShape3D_8p8u2")
 
-[node name="TallSquare" parent="." instance=ExtResource("1_6my8j")]
+[node name="Square2" parent="." instance=ExtResource("1_5df2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 9.23847)
+size = 4
+
+[node name="top" parent="Square2" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
+
+[node name="Square" parent="." instance=ExtResource("1_5df2j")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.8469, 0, 6)
+
+[node name="Bigrect" parent="." instance=ExtResource("2_h0nmp")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -18.9644, 0, -3.94007)
+
+[node name="Medrect" parent="." instance=ExtResource("3_u71au")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 11.9105, 0, -12.1785)
+size = 3
+
+[node name="Enter" parent="." instance=ExtResource("4_5l2kr")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 0, -28)
+
+[node name="Curve45" parent="." instance=ExtResource("5_dlhbm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.0234, 0, -30.6102)
+size = 10
+
+[node name="Corner90" parent="." instance=ExtResource("6_d5l86")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -59)
+
+[node name="Circle" parent="." instance=ExtResource("7_5m24u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.333141, -7.62939e-06, 31.5455)
+size = 4
+
+[editable path="Square2"]

@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://bioekcb48opv7"]
+
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/ModularBlocks/modular_block.gd" id="1_mbl12"]
+[ext_resource type="PackedScene" uid="uid://sui4hv8pwlkx" path="res://ScenesAndScripts/Environments/Blocks/curve45_mid.tscn" id="2_o5no6"]
+[ext_resource type="PackedScene" uid="uid://rxcgi7isp6nd" path="res://ScenesAndScripts/Environments/Blocks/curve45_top.tscn" id="3_8e7rw"]
+[ext_resource type="PackedScene" uid="uid://cxep1ady0sfyi" path="res://ScenesAndScripts/Environments/Blocks/curve45_bot.tscn" id="4_y631x"]
+
+[node name="Curve45" type="Node3D"]
+script = ExtResource("1_mbl12")
+metadata/Block = ExtResource("2_o5no6")
+
+[node name="top" parent="." instance=ExtResource("3_8e7rw")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+
+[node name="bot" parent="." instance=ExtResource("4_y631x")]
+
+[node name="middle" type="Node3D" parent="."]
