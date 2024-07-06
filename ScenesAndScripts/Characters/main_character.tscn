@@ -8,7 +8,6 @@
 [node name="Skeleton3D" parent="Skeleton" index="0"]
 bones/0/position = Vector3(31.5806, -17.0817, -88.8222)
 bones/0/rotation = Quaternion(-0.422819, 0.613262, -0.535518, 0.397938)
-bones/0/scale = Vector3(1, 1, 1)
 bones/1/rotation = Quaternion(3.12648e-14, 0, 1, -2.9619e-20)
 bones/1/scale = Vector3(1.00572, 1.00572, 1.00572)
 bones/2/rotation = Quaternion(-4.75258e-07, 2.07742e-14, 4.37114e-08, 1)
@@ -140,7 +139,7 @@ bones/66/rotation = Quaternion(0.545483, -0.454535, 0.540684, 0.451118)
 bones/67/rotation = Quaternion(0.204445, 0.00476227, -0.022795, 0.978601)
 
 [node name="Jigglebone" type="Node3D" parent="Skeleton/Skeleton3D" index="1"]
-transform = Transform3D(-0.00214317, -0.00746945, -0.006126, 0.00120354, -0.00643251, 0.00742213, -0.00958499, 0.000862442, 0.00230171, 0.986212, 1.92261, -0.145572)
+transform = Transform3D(-0.00214315, -0.00746947, -0.006126, 0.00120355, -0.00643251, 0.00742215, -0.00958501, 0.00086243, 0.0023017, 0.986213, 1.92261, -0.14557)
 top_level = true
 script = ExtResource("2_1insv")
 bone_name = "scarf2"
@@ -151,7 +150,7 @@ gravity = Vector3(3, 1, 0)
 forward_axis = 4
 
 [node name="Jigglebone2" type="Node3D" parent="Skeleton/Skeleton3D" index="2"]
-transform = Transform3D(-0.00344342, -0.00723029, -0.00581202, 0.00349206, -0.00675377, 0.00633292, -0.00859431, 0.000152698, 0.00490187, 0.91376, 1.86356, -0.13316)
+transform = Transform3D(-0.00345462, -0.00723895, -0.00579459, 0.00348824, -0.00674402, 0.00634542, -0.00859138, 0.000172618, 0.00490636, 0.914609, 1.86105, -0.137226)
 top_level = true
 script = ExtResource("2_1insv")
 bone_name = "scarf3"
@@ -162,7 +161,7 @@ gravity = Vector3(3, 1, 0)
 forward_axis = 4
 
 [node name="Jigglebone3" type="Node3D" parent="Skeleton/Skeleton3D" index="3"]
-transform = Transform3D(-0.0047643, -0.00730192, -0.00467945, 0.00595513, -0.00663576, 0.00429149, -0.0063049, -0.000749942, 0.00758944, 0.822207, 1.84153, -0.180001)
+transform = Transform3D(-0.00491438, -0.00700075, -0.00497517, 0.00583248, -0.00692797, 0.0039874, -0.00630436, -0.000952187, 0.00756718, 0.788381, 1.92042, -0.137254)
 top_level = true
 script = ExtResource("2_1insv")
 bone_name = "scarf4"
@@ -173,7 +172,7 @@ gravity = Vector3(2, 1, 0)
 forward_axis = 4
 
 [node name="Jigglebone4" type="Node3D" parent="Skeleton/Skeleton3D" index="4"]
-transform = Transform3D(-0.00210192, -0.00895235, -0.00365391, 0.00361869, -0.00419582, 0.00819841, -0.00896665, 0.000405257, 0.00416519, 0.692552, 1.80044, -0.175272)
+transform = Transform3D(-0.00222576, -0.00874615, -0.00405768, 0.00359196, -0.00461681, 0.00798103, -0.0089475, 0.000322268, 0.00421335, 0.674884, 1.84105, -0.182485)
 top_level = true
 script = ExtResource("2_1insv")
 bone_name = "scarf5"
@@ -183,7 +182,7 @@ gravity = Vector3(0, 0, 0)
 forward_axis = 4
 
 [node name="Jigglebone5" type="Node3D" parent="Skeleton/Skeleton3D" index="5"]
-transform = Transform3D(-0.00227876, -0.00822056, -0.00501432, 0.00375353, -0.00550355, 0.00731681, -0.00886747, -0.000217091, 0.00438573, 0.382152, 1.98267, -0.0630989)
+transform = Transform3D(-0.00228471, -0.00871596, -0.00408975, 0.00379923, -0.00467841, 0.00784808, -0.00884646, 0.000241807, 0.00442669, 0.532219, 1.77411, -0.169009)
 top_level = true
 script = ExtResource("2_1insv")
 bone_name = "scarf6"
@@ -193,7 +192,7 @@ gravity = Vector3(0, 1, 0)
 forward_axis = 4
 
 [node name="Jigglebone6" type="Node3D" parent="Skeleton/Skeleton3D" index="6"]
-transform = Transform3D(-0.00292518, -0.00942519, 0.000723011, 0.00263135, -8.49599e-05, 0.00953848, -0.00907926, 0.00301201, 0.0025315, 0.463029, 1.15343, -0.463116)
+transform = Transform3D(-0.00309194, -0.00935673, 0.000897496, 0.00274418, 5.09395e-06, 0.00950702, -0.00899018, 0.00321956, 0.00259327, 0.467025, 1.23007, -0.466819)
 top_level = true
 script = ExtResource("2_1insv")
 bone_name = "scarf7"
