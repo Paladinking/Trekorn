@@ -8,6 +8,8 @@ const ACCELERATION_IN_AIR_MULT = 0.1
 const JUMP_VELOCITY = 5.0
 const MAX_JUMP_TIME = 0.25
 var jumping = 0.0
+var ledge_in_front = false
+var is_climbing = false
 
 const CAMERA_MOVE_SPEED = 5
 const CAMERA_MAX_DISTANCE = 10
@@ -17,6 +19,7 @@ var camera_angle_y = 0
 var camera_angle_x = 0
 const CAMERA_ANGLE_X_MAX = deg_to_rad(90)
 const CAMERA_ANGLE_X_MIN = deg_to_rad(-15)
+const CLIMBING_DESCELLERATION = 18
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -45,8 +48,22 @@ func _physics_process(delta):
 		current_acc *= ACCELERATION_IN_AIR_MULT
 	velocity = velocity.move_toward(direction * SPEED, delta * current_acc)
 
+	if velocity.x != 0 and velocity.z != 0:
+		$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
+	
+	ledge_in_front = false
+	if $Model/LowerClimbRay.is_colliding() and !$Model/UpperClimbRay.is_colliding():
+		ledge_in_front = true
+		velocity.y *= 0.5
+
+	if ledge_in_front and not is_on_floor():
+		is_climbing = true
+	
+	if not is_on_wall():
+		is_climbing = false
+
 	if Input.is_action_just_pressed("jump"):
-		if is_on_floor():
+		if is_on_floor() and not is_climbing:
 			jumping = MAX_JUMP_TIME
 			velocity.y = JUMP_VELOCITY
 
@@ -60,8 +77,8 @@ func _physics_process(delta):
 				jump_direction = direction
 			velocity += jump_direction * JUMP_VELOCITY
 			velocity.y = JUMP_VELOCITY
-
-	if not is_on_floor():
+	
+	if (not is_on_floor()) and (not is_climbing):
 		velocity.y -= gravity * delta
 
 	if jumping > 0.0:
@@ -74,7 +91,7 @@ func _physics_process(delta):
 		else:
 			jumping = 0.0
 
-	$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
+	
 	#if velocity.is_zero_approx():
 		#$Model/AnimationPlayer.play("Idle")
 
@@ -117,4 +134,9 @@ func _process(delta):
 				$Model.show()
 	elif not $Model.is_visible_in_tree():
 		$Model.show()
+		
+	if $Model/LowerClimbRay.is_colliding():
+		print("Collission Lower")
+	if $Model/UpperClimbRay.is_colliding():
+		print("Collission upper")
 

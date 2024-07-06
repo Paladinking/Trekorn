@@ -15,6 +15,14 @@ shape = SubResource("CapsuleShape3D_obfn4")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 size = Vector3(1, 2, 1)
 
+[node name="LowerClimbRay" type="RayCast3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.30709, 0)
+target_position = Vector3(0.7, 0, 0)
+
+[node name="UpperClimbRay" type="RayCast3D" parent="Model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.961081, 0)
+target_position = Vector3(0.7, 0, 0)
+
 [node name="Camera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 5)
 current = true
