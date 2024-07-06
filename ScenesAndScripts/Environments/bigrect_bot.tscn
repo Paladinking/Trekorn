@@ -1,16 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://indmq7g8ugvv"]
+[gd_scene load_steps=4 format=3 uid="uid://b17dkh60uw0f3"]
 
-[ext_resource type="Script" path="res://ScenesAndScripts/Environments/block.gd" id="1_v8nik"]
-[ext_resource type="PackedScene" uid="uid://cbufyjjal2kjy" path="res://Assets/Buildings/TempBlockout/bigrect_bot_1.glb" id="2_q0sif"]
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/block.gd" id="1_lbqj2"]
+[ext_resource type="PackedScene" uid="uid://cbufyjjal2kjy" path="res://Assets/Buildings/TempBlockout/bigrect_bot_1.glb" id="2_f7qd5"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jnfjf"]
 size = Vector3(10, 4, 5)
 
 [node name="BigrectBot" type="Node3D"]
-script = ExtResource("1_v8nik")
-metadata/Rect = [ExtResource("2_q0sif")]
+script = ExtResource("1_lbqj2")
+metadata/Rect = [ExtResource("2_f7qd5")]
 
-[node name="default" parent="." instance=ExtResource("2_q0sif")]
+[node name="default" parent="." instance=ExtResource("2_f7qd5")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
