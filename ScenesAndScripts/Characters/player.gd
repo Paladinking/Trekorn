@@ -40,6 +40,8 @@ func _ready():
 	$Camera.position = Vector3(sin(camera_angle_y), camera_angle_x, cos(camera_angle_y)) * CAMERA_MAX_DISTANCE
 	$Camera.look_at(global_position + camera_target_position)
 	$CameraRay.target_position = $Camera.position
+	$Model/AnimationPlayer.play("run")
+	$Model/AnimationPlayer.pause()
 
 
 func _physics_process(delta):
@@ -67,6 +69,8 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
+			$Model/AnimationPlayer.stop(true)
+			$Model/AnimationPlayer.play("running_jump")
 			jump_time = MAX_JUMP_TIME
 			velocity.y = JUMP_VELOCITY
 		else:
@@ -75,6 +79,8 @@ func _physics_process(delta):
 		jump_press_time -= delta
 
 	if wall_jump_time > 0 and jump_press_time > 0:
+		$Model/AnimationPlayer.stop(true)
+		$Model/AnimationPlayer.play("wall_jump")
 		wall_jump_time = 0
 		jump_press_time = 0
 		jump_time = MAX_JUMP_TIME
@@ -87,9 +93,6 @@ func _physics_process(delta):
 		if not shoulder_cam:
 			$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
 
-	if not is_on_floor():
-		velocity.y -= gravity * delta
-
 	if jump_time > 0.0:
 		if Input.is_action_pressed("jump"):
 			jump_time -= delta
@@ -101,6 +104,13 @@ func _physics_process(delta):
 			jump_time = 0.0
 			if velocity.y > 0:
 				velocity.y *= 0.5
+
+	if is_on_floor():
+		if velocity.y == 0 and not velocity.is_zero_approx():
+			$Model/AnimationPlayer.play("run")
+	else:
+		#$Model/AnimationPlayer.pause()
+		velocity.y -= gravity * delta
 
 	move_and_slide()
 
