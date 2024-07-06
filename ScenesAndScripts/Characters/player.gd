@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-
+const SHOOT_COOLDOWN: float = 3.0
 const SPEED = 6.0
 const SPRINT_SPEED_MULT = 2
 const SLOW_DOWN_MULT = 0.5
@@ -23,9 +23,12 @@ var camera_angle_x = deg_to_rad(90)
 const CAMERA_ANGLE_X_MAX = deg_to_rad(179)
 const CAMERA_ANGLE_X_MIN = deg_to_rad(45)
 
+var shoot_cooldown: float = 0.0
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+const bullet = preload("res://ScenesAndScripts/Characters/bullet.tscn")
 
 func _ready():
 	#var rot_y = CAMERA_POSITION.rotated(Vector3.UP, camera_angle_y)
@@ -49,7 +52,7 @@ func _physics_process(delta):
 		current_speed *= SLOW_DOWN_MULT
 	velocity = velocity.move_toward(direction * current_speed, delta * current_acceleration)
 	if not direction.is_zero_approx():
-		$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
+		$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.FORWARD, Vector3.UP)
 
 	if is_on_wall_only():
 		wall_jump_time = WALL_JUMP_MARGIN
@@ -129,7 +132,16 @@ func _process(delta):
 				$Model.show()
 	elif not $Model.is_visible_in_tree():
 		$Model.show()
-
+		
+	if Input.is_action_pressed("shoot") and shoot_cooldown <= 0:
+		var b = bullet.instantiate()
+		var dir: Vector3 = -$Model.global_basis.z
+		b.position = Vector3(position.x, position.y + 1, position.z) + 2 * dir
+		b.linear_velocity = 500 * dir
+		get_tree().root.add_child(b)
+		shoot_cooldown = SHOOT_COOLDOWN
+	shoot_cooldown -= delta
+		
 #var p = false
 
 func _unhandled_key_input(event):
