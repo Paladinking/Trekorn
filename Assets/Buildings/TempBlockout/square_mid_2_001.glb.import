@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://s4sqdyaow7ll"
-path="res://.godot/imported/square_mid_1.glb-a2009f8627bd06c614366f3827c7b87b.scn"
+uid="uid://s5xfae0n0xum"
+path="res://.godot/imported/square_mid_2_001.glb-c9974c1d2de811897a9e175a7fbb5a56.scn"
 
 [deps]
 
-source_file="res://Assets/Buildings/TempBlockout/square_mid_1.glb"
-dest_files=["res://.godot/imported/square_mid_1.glb-a2009f8627bd06c614366f3827c7b87b.scn"]
+source_file="res://Assets/Buildings/TempBlockout/square_mid_2_001.glb"
+dest_files=["res://.godot/imported/square_mid_2_001.glb-c9974c1d2de811897a9e175a7fbb5a56.scn"]
 
 [params]
 

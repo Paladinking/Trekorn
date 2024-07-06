@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://ctej00whfqogt"
-path="res://.godot/imported/curve45_top_2.glb-54c83b1e0c9706f91d6ed10ff06e9545.scn"
+uid="uid://be7gb7kt17r4h"
+path="res://.godot/imported/curve45_top_collision.glb-38974eafc48ff420cb62eaa89dd85b90.scn"
 
 [deps]
 
-source_file="res://Assets/Buildings/TempBlockout/curve45_top_2.glb"
-dest_files=["res://.godot/imported/curve45_top_2.glb-54c83b1e0c9706f91d6ed10ff06e9545.scn"]
+source_file="res://Assets/Buildings/TempBlockout/curve45_top_collision.glb"
+dest_files=["res://.godot/imported/curve45_top_collision.glb-38974eafc48ff420cb62eaa89dd85b90.scn"]
 
 [params]
 
