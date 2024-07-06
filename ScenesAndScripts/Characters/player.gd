@@ -2,15 +2,16 @@ extends CharacterBody3D
 
 const SHOOT_COOLDOWN: float = 3.0
 const SPEED = 6.0
-const SPRINT_SPEED_MULT = 2
+const SPRINT_SPEED_MULT = 2.0
 const SLOW_DOWN_MULT = 0.5
 const ACCELERATION = 25.0
 const ACCELERATION_IN_AIR_MULT = 0.1
 const JUMP_VELOCITY = 5.0
 const MAX_JUMP_TIME = 0.25
 var jump_time = 0.0
-const WALL_JUMP_MARGIN = 1
-var wall_jump_time = 0
+var jump_press_time = 0.0
+const WALL_JUMP_MARGIN = 0.25
+var wall_jump_time = 0.0
 var last_collision_direction : Vector3 = Vector3.ZERO
 
 #const CAMERA_MOVE_SPEED = 5
@@ -66,17 +67,22 @@ func _physics_process(delta):
 		if is_on_floor():
 			jump_time = MAX_JUMP_TIME
 			velocity.y = JUMP_VELOCITY
+		else:
+			jump_press_time = WALL_JUMP_MARGIN
+	elif jump_press_time > 0:
+		jump_press_time -= delta
 
-		elif wall_jump_time > 0:
-			wall_jump_time = 0
-			jump_time = MAX_JUMP_TIME
-			last_collision_direction.y = 0
-			last_collision_direction = last_collision_direction.normalized() * 0.5
-			if last_collision_direction.dot(direction) > 0:
-				last_collision_direction = direction
-			velocity += last_collision_direction * JUMP_VELOCITY
-			velocity.y = JUMP_VELOCITY
-			$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
+	if wall_jump_time > 0 and jump_press_time > 0:
+		wall_jump_time = 0
+		jump_press_time = 0
+		jump_time = MAX_JUMP_TIME
+		last_collision_direction.y = 0
+		last_collision_direction = last_collision_direction.normalized() * 0.5
+		if last_collision_direction.dot(direction) > 0:
+			last_collision_direction = direction
+		velocity += last_collision_direction * JUMP_VELOCITY
+		velocity.y = JUMP_VELOCITY
+		$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
 
 	if not is_on_floor():
 		velocity.y -= gravity * delta
