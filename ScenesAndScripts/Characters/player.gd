@@ -8,7 +8,10 @@ const ACCELERATION = 25.0
 const ACCELERATION_IN_AIR_MULT = 0.1
 const JUMP_VELOCITY = 5.0
 const MAX_JUMP_TIME = 0.25
-var jumping = 0.0
+var jump_time = 0.0
+const WALL_JUMP_MARGIN = 1
+var wall_jump_time = 0
+var last_collision_direction : Vector3 = Vector3.ZERO
 
 #const CAMERA_MOVE_SPEED = 5
 const CAMERA_MOVE_SPEED = 2.5
@@ -34,10 +37,6 @@ func _ready():
 
 
 func _physics_process(delta):
-	#if not is_on_floor():
-		#velocity.y -= gravity * delta
-
-	#if is_on_floor():
 	var input_dir = Input.get_vector("go_left", "go_right", "go_forward", "go_backward")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).rotated(Vector3.UP, camera_angle_y)
 	var current_acceleration = ACCELERATION
@@ -52,38 +51,44 @@ func _physics_process(delta):
 	if not direction.is_zero_approx():
 		$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
 
+	if is_on_wall_only():
+		wall_jump_time = WALL_JUMP_MARGIN
+		last_collision_direction = get_last_slide_collision().get_position().direction_to(global_position)
+	elif wall_jump_time > 0:
+		wall_jump_time -= delta
+	elif not last_collision_direction.is_zero_approx():
+		last_collision_direction = Vector3.ZERO
+
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor():
-			jumping = MAX_JUMP_TIME
+			jump_time = MAX_JUMP_TIME
 			velocity.y = JUMP_VELOCITY
 
-		elif is_on_wall_only():
-			jumping = MAX_JUMP_TIME
-			var collision : KinematicCollision3D = get_last_slide_collision()
-			var jump_direction = collision.get_position().direction_to(global_position)
-			jump_direction.y = 0
-			jump_direction = jump_direction.normalized() * 0.5
-			if jump_direction.dot(direction) > 0:
-				jump_direction = direction
-			velocity += jump_direction * JUMP_VELOCITY
+		elif wall_jump_time > 0:
+			wall_jump_time = 0
+			jump_time = MAX_JUMP_TIME
+			last_collision_direction.y = 0
+			last_collision_direction = last_collision_direction.normalized() * 0.5
+			if last_collision_direction.dot(direction) > 0:
+				last_collision_direction = direction
+			velocity += last_collision_direction * JUMP_VELOCITY
 			velocity.y = JUMP_VELOCITY
 			$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
 
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
-	if jumping > 0.0:
+	if jump_time > 0.0:
 		if Input.is_action_pressed("jump"):
-			jumping -= delta
-			if jumping > 0.0:
-				velocity.y = JUMP_VELOCITY * (1 - (jumping / MAX_JUMP_TIME) / 5)
+			jump_time -= delta
+			if jump_time > 0.0:
+				velocity.y = JUMP_VELOCITY * (1 - (jump_time / MAX_JUMP_TIME) / 5)
 			else:
-				jumping = 0.0
+				jump_time = 0.0
 		else:
-			jumping = 0.0
-
-	#if velocity.is_zero_approx():
-		#$Model/AnimationPlayer.play("Idle")
+			jump_time = 0.0
+			if velocity.y > 0:
+				velocity.y *= 0.5
 
 	move_and_slide()
 
@@ -112,7 +117,6 @@ func _process(delta):
 	$CameraRay.target_position = camera_position
 
 	if $CameraRay.is_colliding():
-		var collision_point = $CameraRay.get_collision_point() - $CameraRay.global_position + $CameraRay.position
 		var camera_ray_collision_distance = $CameraRay.position.distance_to($CameraRay.get_collision_point() - $CameraRay.global_position + $CameraRay.position)
 		if camera_ray_collision_distance < CAMERA_MAX_DISTANCE:
 			var to_move_camera = CAMERA_MAX_DISTANCE - camera_ray_collision_distance
