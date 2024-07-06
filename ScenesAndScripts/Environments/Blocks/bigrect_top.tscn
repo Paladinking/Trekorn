@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://dl1nn7wab5hge"]
 
-[ext_resource type="Script" path="res://ScenesAndScripts/Environments/block.gd" id="1_2cfku"]
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/Blocks/block.gd" id="1_2cfku"]
 [ext_resource type="Texture2D" uid="uid://isoxsh1vv3wb" path="res://Assets/Buildings/TempBlockout/bigrect_top_1_Image.png" id="2_8loq3"]
 [ext_resource type="PackedScene" uid="uid://dree14t4b7ixo" path="res://Assets/Buildings/TempBlockout/bigrect_top_1.glb" id="3_vrrsb"]
 

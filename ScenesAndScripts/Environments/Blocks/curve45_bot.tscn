@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cxep1ady0sfyi"]
 
-[ext_resource type="Script" path="res://ScenesAndScripts/Environments/block.gd" id="1_cl5tr"]
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/Blocks/block.gd" id="1_cl5tr"]
 [ext_resource type="PackedScene" uid="uid://dtl8044a0rb77" path="res://Assets/Buildings/TempBlockout/curve45_bot_1.glb" id="2_hwq77"]
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_aeyc2"]

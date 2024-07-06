@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://b8i2al5jacohu"]
+[gd_scene load_steps=4 format=3 uid="uid://b8i2al5jacohu"]
+
+[ext_resource type="PackedScene" uid="uid://b223a2ai2d6bq" path="res://ScenesAndScripts/Environments/tall_square.tscn" id="1_6my8j"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0mwd8"]
 size = Vector3(5, 0.5, 5)
@@ -22,3 +24,6 @@ transform = Transform3D(0.965926, 0.25, -0.0669873, 0, 0.258819, 0.965926, 0.258
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldFloor"]
 shape = SubResource("WorldBoundaryShape3D_8p8u2")
+
+[node name="TallSquare" parent="." instance=ExtResource("1_6my8j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.8469, 0, 6)
