@@ -1,0 +1,223 @@
+[gd_resource type="VisualShader" load_steps=14 format=3 uid="uid://cq8u1rv878qa6"]
+
+[sub_resource type="VisualShaderNodeTransformDecompose" id="VisualShaderNodeTransformDecompose_11moc"]
+
+[sub_resource type="VisualShaderNodeVectorCompose" id="VisualShaderNodeVectorCompose_28uol"]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_rdesk"]
+
+[sub_resource type="VisualShaderNodeParticleRandomness" id="VisualShaderNodeParticleRandomness_836g7"]
+default_input_values = [1, -5.0, 2, 5.0]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_c5v0h"]
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_fu45i"]
+default_input_values = [0, 0.0, 1, 3.0]
+
+[sub_resource type="VisualShaderNodeParticleRandomness" id="VisualShaderNodeParticleRandomness_7ex48"]
+default_input_values = [1, -5.0, 2, 5.0]
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_1vo7d"]
+constant = 0.307
+
+[sub_resource type="VisualShaderNodeParticleRandomness" id="VisualShaderNodeParticleRandomness_yqijl"]
+
+[sub_resource type="VisualShaderNodeVec3Parameter" id="VisualShaderNodeVec3Parameter_w7l2k"]
+parameter_name = "wind_dir"
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_jong3"]
+constant = 3.14159
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_etajf"]
+operator = 2
+
+[sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_qiqf0"]
+input_name = "transform"
+
+[resource]
+code = "shader_type particles;
+uniform vec3 wind_dir;
+
+
+float __rand_from_seed(inout uint seed) {
+	int k;
+	int s = int(seed);
+	if (s == 0)
+	s = 305420679;
+	k = s / 127773;
+	s = 16807 * (s - k * 127773) - 2836 * k;
+	if (s < 0)
+		s += 2147483647;
+	seed = uint(s);
+	return float(seed % uint(65536)) / 65535.0;
+}
+
+float __rand_from_seed_m1_p1(inout uint seed) {
+	return __rand_from_seed(seed) * 2.0 - 1.0;
+}
+
+float __randf_range(inout uint seed, float from, float to) {
+	return __rand_from_seed(seed) * (to - from) + from;
+}
+
+uint __hash(uint x) {
+	x = ((x >> uint(16)) ^ x) * uint(73244475);
+	x = ((x >> uint(16)) ^ x) * uint(73244475);
+	x = (x >> uint(16)) ^ x;
+	return x;
+}
+
+mat3 __build_rotation_mat3(vec3 axis, float angle) {
+	axis = normalize(axis);
+	float s = sin(angle);
+	float c = cos(angle);
+	float oc = 1.0 - c;
+	return mat3(vec3(oc * axis.x * axis.x + c, oc * axis.x * axis.y - axis.z * s, oc * axis.z * axis.x + axis.y * s), vec3(oc * axis.x * axis.y + axis.z * s, oc * axis.y * axis.y + c, oc * axis.y * axis.z - axis.x * s), vec3(oc * axis.z * axis.x - axis.y * s, oc * axis.y * axis.z + axis.x * s, oc * axis.z * axis.z + c));
+}
+
+mat4 __build_rotation_mat4(vec3 axis, float angle) {
+	axis = normalize(axis);
+	float s = sin(angle);
+	float c = cos(angle);
+	float oc = 1.0 - c;
+	return mat4(vec4(oc * axis.x * axis.x + c, oc * axis.x * axis.y - axis.z * s, oc * axis.z * axis.x + axis.y * s, 0), vec4(oc * axis.x * axis.y + axis.z * s, oc * axis.y * axis.y + c, oc * axis.y * axis.z - axis.x * s, 0), vec4(oc * axis.z * axis.x - axis.y * s, oc * axis.y * axis.z + axis.x * s, oc * axis.z * axis.z + c, 0), vec4(0, 0, 0, 1));
+}
+
+vec2 __get_random_unit_vec2(inout uint seed) {
+	return normalize(vec2(__rand_from_seed_m1_p1(seed), __rand_from_seed_m1_p1(seed)));
+}
+
+vec3 __get_random_unit_vec3(inout uint seed) {
+	return normalize(vec3(__rand_from_seed_m1_p1(seed), __rand_from_seed_m1_p1(seed), __rand_from_seed_m1_p1(seed)));
+}
+
+vec2 __randv2_range(inout uint seed, vec2 from, vec2 to) {
+	return vec2(__randf_range(seed, from.x, to.x), __randf_range(seed, from.y, to.y));
+}
+
+vec3 __randv3_range(inout uint seed, vec3 from, vec3 to) {
+	return vec3(__randf_range(seed, from.x, to.x), __randf_range(seed, from.y, to.y), __randf_range(seed, from.z, to.z));
+}
+
+vec4 __randv4_range(inout uint seed, vec4 from, vec4 to) {
+	return vec4(__randf_range(seed, from.x, to.x), __randf_range(seed, from.y, to.y), __randf_range(seed, from.z, to.z), __randf_range(seed, from.w, to.w));
+}
+
+void start() {
+	uint __seed = __hash(NUMBER + uint(1) + RANDOM_SEED);
+
+	{
+// Vector3Parameter:4
+		vec3 n_out4p0 = wind_dir;
+
+
+// Input:9
+		mat4 n_out9p0 = TRANSFORM;
+
+
+// TransformDecompose:10
+		vec3 n_out10p0 = n_out9p0[0].xyz;
+		vec3 n_out10p1 = n_out9p0[1].xyz;
+		vec3 n_out10p2 = n_out9p0[2].xyz;
+		vec3 n_out10p3 = n_out9p0[3].xyz;
+
+
+// ParticleRandomness:18
+		float n_in18p1 = -5.00000;
+		float n_in18p2 = 5.00000;
+		float n_out18p0 = __randf_range(__seed, n_in18p1, n_in18p2);
+
+
+// FloatOp:13
+		float n_out13p0 = n_out10p0.x + n_out18p0;
+
+
+// FloatOp:17
+		float n_in17p1 = 3.00000;
+		float n_out17p0 = n_out10p1.x + n_in17p1;
+
+
+// ParticleRandomness:14
+		float n_in14p1 = -5.00000;
+		float n_in14p2 = 5.00000;
+		float n_out14p0 = __randf_range(__seed, n_in14p1, n_in14p2);
+
+
+// FloatOp:16
+		float n_out16p0 = n_out10p2.x + n_out14p0;
+
+
+// VectorCompose:11
+		vec3 n_out11p0 = vec3(n_out13p0, n_out17p0, n_out16p0);
+
+
+// FloatConstant:19
+		float n_out19p0 = 0.307000;
+
+
+// ParticleRandomness:2
+		float n_in2p1 = -1.00000;
+		float n_in2p2 = 1.00000;
+		float n_out2p0 = __randf_range(__seed, n_in2p1, n_in2p2);
+
+
+// FloatConstant:6
+		float n_out6p0 = 3.141593;
+
+
+// FloatOp:7
+		float n_out7p0 = n_out2p0 * n_out6p0;
+
+
+// StartOutput:0
+		VELOCITY = n_out4p0;
+		if (RESTART_POSITION) {
+			TRANSFORM = mat4(vec4(1.0, 0.0, 0.0, 0.0), vec4(0.0, 1.0, 0.0, 0.0), vec4(0.0, 0.0, 1.0, 0.0), vec4(n_out11p0, 1.0));
+			if (RESTART_VELOCITY) {
+				VELOCITY = (EMISSION_TRANSFORM * vec4(VELOCITY, 0.0)).xyz;
+			}
+			TRANSFORM = EMISSION_TRANSFORM * TRANSFORM;
+		}
+		TRANSFORM *= __build_rotation_mat4(vec3(0, 1, 0), n_out7p0);
+		TRANSFORM *= mat4(vec4(n_out19p0, 0, 0, 0), vec4(0, n_out19p0, 0, 0), vec4(0, 0, n_out19p0, 0), vec4(0, 0, 0, 1));
+
+
+	}
+}
+
+"
+graph_offset = Vector2(-362.811, -33.6391)
+mode = 2
+flags/collision_use_scale = false
+flags/disable_force = false
+flags/disable_velocity = false
+flags/keep_data = false
+nodes/start/0/position = Vector2(420, 80)
+nodes/start/2/node = SubResource("VisualShaderNodeParticleRandomness_yqijl")
+nodes/start/2/position = Vector2(-20, 380)
+nodes/start/4/node = SubResource("VisualShaderNodeVec3Parameter_w7l2k")
+nodes/start/4/position = Vector2(0, -100)
+nodes/start/6/node = SubResource("VisualShaderNodeFloatConstant_jong3")
+nodes/start/6/position = Vector2(-20, 580)
+nodes/start/7/node = SubResource("VisualShaderNodeFloatOp_etajf")
+nodes/start/7/position = Vector2(240, 360)
+nodes/start/9/node = SubResource("VisualShaderNodeInput_qiqf0")
+nodes/start/9/position = Vector2(-780, 60)
+nodes/start/10/node = SubResource("VisualShaderNodeTransformDecompose_11moc")
+nodes/start/10/position = Vector2(-540, 60)
+nodes/start/11/node = SubResource("VisualShaderNodeVectorCompose_28uol")
+nodes/start/11/position = Vector2(120, 80)
+nodes/start/13/node = SubResource("VisualShaderNodeFloatOp_rdesk")
+nodes/start/13/position = Vector2(-220, 0)
+nodes/start/14/node = SubResource("VisualShaderNodeParticleRandomness_836g7")
+nodes/start/14/position = Vector2(-660, 220)
+nodes/start/16/node = SubResource("VisualShaderNodeFloatOp_c5v0h")
+nodes/start/16/position = Vector2(-220, 260)
+nodes/start/17/node = SubResource("VisualShaderNodeFloatOp_fu45i")
+nodes/start/17/position = Vector2(-220, 120)
+nodes/start/18/node = SubResource("VisualShaderNodeParticleRandomness_7ex48")
+nodes/start/18/position = Vector2(-560, -100)
+nodes/start/19/node = SubResource("VisualShaderNodeFloatConstant_1vo7d")
+nodes/start/19/position = Vector2(157.871, 252.913)
+nodes/start/connections = PackedInt32Array(4, 0, 0, 1, 2, 0, 7, 0, 6, 0, 7, 1, 7, 0, 0, 7, 9, 0, 10, 0, 11, 0, 0, 4, 10, 0, 13, 0, 13, 0, 11, 0, 10, 2, 16, 0, 14, 0, 16, 1, 16, 0, 11, 2, 17, 0, 11, 1, 10, 1, 17, 0, 18, 0, 13, 1, 19, 0, 0, 5)
+nodes/process/0/position = Vector2(700, 100)
