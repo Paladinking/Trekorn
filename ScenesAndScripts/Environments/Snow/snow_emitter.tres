@@ -162,7 +162,7 @@ void start() {
 
 
 // FloatConstant:6
-		float n_out6p0 = 3.141593;
+		float n_out6p0 = 3.141590;
 
 
 // FloatOp:7
@@ -186,7 +186,6 @@ void start() {
 }
 
 "
-graph_offset = Vector2(-362.811, -33.6391)
 mode = 2
 flags/collision_use_scale = false
 flags/disable_force = false
