@@ -80,7 +80,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.333141, -7.62939e-06, 31.5
 size = 4
 
 [node name="LongWall" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.890748, 6.34184)
+transform = Transform3D(0.748493, 0, -0.663143, 0, 1, 0, 0.663143, 0, 0.748493, -6.40212, 1.41793, 2.3298)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="LongWall"]
 size = Vector3(10, 2.5, 1)
