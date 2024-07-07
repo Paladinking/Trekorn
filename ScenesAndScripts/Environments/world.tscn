@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://b8i2al5jacohu"]
+[gd_scene load_steps=25 format=3 uid="uid://b8i2al5jacohu"]
 
 [ext_resource type="PackedScene" uid="uid://b223a2ai2d6bq" path="res://ScenesAndScripts/Environments/ModularBlocks/square.tscn" id="1_5df2j"]
 [ext_resource type="PackedScene" uid="uid://oviov3wpf55v" path="res://ScenesAndScripts/Environments/Buildings/staircase.tscn" id="2_nljkc"]
@@ -19,6 +19,7 @@
 [ext_resource type="PackedScene" uid="uid://dtkqmv103anq2" path="res://Assets/Buildings/Crimscrams/snowcorner.glb" id="17_gqacf"]
 [ext_resource type="PackedScene" uid="uid://draij52gef6av" path="res://Assets/Buildings/Crimscrams/snow3.glb" id="18_6n5tq"]
 [ext_resource type="PackedScene" uid="uid://bh4ijg21ycqwc" path="res://Assets/Buildings/Crimscrams/snowpile.glb" id="19_ju43b"]
+[ext_resource type="PackedScene" uid="uid://cp5pidual6y47" path="res://ScenesAndScripts/Environments/Crimscrams/spruce.tscn" id="20_jmw7j"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_42e4f"]
 albedo_color = Color(0.835294, 0.92549, 0.933333, 1)
@@ -394,5 +395,17 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.4, 12, 59.7)
 
 [node name="Medrect3" parent="." instance=ExtResource("10_8gj64")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13, 14, 66)
+
+[node name="Spruce" parent="." instance=ExtResource("20_jmw7j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.52625, 0, -1.97372)
+height = 4.2
+
+[node name="Spruce2" parent="." instance=ExtResource("20_jmw7j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.52625, 0, 4.54295)
+height = 3.6
+
+[node name="Spruce3" parent="." instance=ExtResource("20_jmw7j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.173348, 0, 7.86835)
+height = 5.0
 
 [editable path="Square2"]

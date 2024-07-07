@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 const SHOOT_COOLDOWN: float = 3.0
 const SPEED = 6.0
-const SPRINT_SPEED_MULT = 2.0
+const SPRINT_SPEED_MULT = 1.4
 const SLOW_DOWN_MULT = 0.5
 const CLIMB_SPEED_MULT = 0.6
 const ACCELERATION = 25.0
@@ -22,7 +22,7 @@ var last_collision_direction : Vector3 = Vector3.ZERO
 const FALL_SCREAM_VELOCITY = -12.0
 
 const CAMERA_MOVE_SPEED = 5
-const CAMERA_MAX_DISTANCE = 10
+const CAMERA_MAX_DISTANCE = 5
 const SHOULDER_MAX_DISTANCE = 3
 var camera_target_position = Vector3(0, 1.5, 0)
 const CAMERA_WALL_SAFETY_DIST = 1
@@ -150,11 +150,12 @@ func _physics_process(delta):
 		#$Model/AnimationPlayer.pause()
 		#velocity.y -= gravity * delta
 		pass
-	
-	
+
 	handle_climbing(delta)
 	# velocity måste sättas EFTER handle_climbing
-	velocity = velocity.move_toward(direction * current_speed, delta * current_acceleration)
+	var new_velocity = Vector3(velocity.x, 0, velocity.z).move_toward(direction * current_speed, delta * current_acceleration)
+	velocity.x = new_velocity.x
+	velocity.z = new_velocity.z
 	if not direction.is_zero_approx() and not shoulder_cam and is_on_floor():
 		$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.FORWARD, Vector3.UP)
 
@@ -300,7 +301,7 @@ func handle_climbing(delta):
 		else:
 			global_position.y -= (global_position.y - ledge_height + 1.8) * 0.5
 
-		print(global_position.y)
+		#print(global_position.y)
 
 	if is_climbing and ledge_leap_cooldown < 0:
 		ledge_leap_cooldown = 0.5
