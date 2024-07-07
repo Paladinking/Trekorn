@@ -50,6 +50,7 @@ var weapon_pos
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 const bullet = preload("res://ScenesAndScripts/Characters/bullet.tscn")
+const flash = preload("res://ScenesAndScripts/Characters/Flash.tscn")
 
 func _ready():
 	weapon_pos = $ag42b.position
@@ -228,8 +229,13 @@ func _process(delta):
 		#print("Collission upper")
 	if shoulder_cam and Input.is_action_pressed("shoot") and shoot_cooldown <= 0:
 		var b = bullet.instantiate()
+		var f = flash.instantiate()
+		get_tree().root.add_child(f)
 		var dir: Vector3 = -$ag42b.basis.z
 		b.position = to_global($ag42b.position + 2 * dir)
+		f.position = b.position
+		f.emitting = true
+		f.finished.connect(f.queue_free)
 		b.player_pos = to_global(camera_target_position)
 		b.linear_velocity = -$ag42b.global_basis.z * 100
 		velocity -= 5 * dir
