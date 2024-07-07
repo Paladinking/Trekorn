@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://b8i2al5jacohu"]
+[gd_scene load_steps=20 format=3 uid="uid://b8i2al5jacohu"]
 
 [ext_resource type="PackedScene" uid="uid://b223a2ai2d6bq" path="res://ScenesAndScripts/Environments/ModularBlocks/square.tscn" id="1_5df2j"]
 [ext_resource type="PackedScene" uid="uid://oviov3wpf55v" path="res://ScenesAndScripts/Environments/Buildings/staircase.tscn" id="2_nljkc"]
@@ -14,6 +14,8 @@
 [ext_resource type="PackedScene" uid="uid://bmahvdl5r7a1q" path="res://ScenesAndScripts/Environments/ModularBlocks/arcsolo.tscn" id="12_rii4x"]
 [ext_resource type="PackedScene" uid="uid://btrxkhygow68p" path="res://ScenesAndScripts/Environments/Crimscrams/barrel.tscn" id="13_hpt5a"]
 [ext_resource type="PackedScene" uid="uid://beqcpy1bkjtli" path="res://ScenesAndScripts/Environments/Crimscrams/crate.tscn" id="14_rucdr"]
+[ext_resource type="PackedScene" uid="uid://bon2kni2ove5l" path="res://ScenesAndScripts/Environments/Buildings/square_tower.tscn" id="15_5q252"]
+[ext_resource type="PackedScene" uid="uid://brah4jxbb807i" path="res://ScenesAndScripts/Environments/Buildings/medrect_tower.tscn" id="16_ws78c"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_42e4f"]
 albedo_color = Color(0.0901961, 0.0823529, 0.129412, 1)
@@ -109,40 +111,40 @@ transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17.186
 transform = Transform3D(-4.27106e-07, 0, 10.7941, 0, 5, 0, -9.77104, 0, -4.71823e-07, 21.4111, 10.7, -20.746)
 
 [node name="GroundBlock2" parent="Walls" instance=ExtResource("9_jdqq2")]
-transform = Transform3D(-3.72536e-06, 0, 29.1012, 0, 5, 0, -85.2263, 0, -1.27205e-06, 41.2369, 11.0598, -10.531)
+transform = Transform3D(-5.23175e-06, 0, 29.1012, 0, 5, 0, -119.689, 0, -1.27205e-06, 41.2369, 11.0598, 10.2388)
 
 [node name="Kvarter1" type="Node" parent="."]
 
 [node name="Arcsolo6" parent="Kvarter1" instance=ExtResource("12_rii4x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.8588, -1.63926, 34.6558)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.8588, -1.63926, 34.423)
 size = 2
 
 [node name="Arcsolo7" parent="Kvarter1" instance=ExtResource("12_rii4x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.229, -1.63926, 34.6558)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.229, -1.63926, 34.423)
 size = 2
 
 [node name="Arcsolo8" parent="Kvarter1" instance=ExtResource("12_rii4x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9102, -1.63926, 34.6558)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.9102, -1.63926, 34.423)
 size = 2
 
 [node name="Arcsolo5" parent="Kvarter1" instance=ExtResource("12_rii4x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.1776, -1.63926, 34.6558)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.1776, -1.63926, 34.423)
 size = 2
 
 [node name="Arcsolo9" parent="Kvarter1" instance=ExtResource("12_rii4x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.05877, -1.63926, 34.6558)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.05877, -1.63926, 34.423)
 size = 2
 
 [node name="Arcsolo10" parent="Kvarter1" instance=ExtResource("12_rii4x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.57106, -1.63926, 34.6558)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.57106, -1.63926, 34.423)
 size = 2
 
 [node name="Arcsolo11" parent="Kvarter1" instance=ExtResource("12_rii4x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.88986, -1.63926, 34.6558)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.88986, -1.63926, 34.423)
 size = 2
 
 [node name="Arcsolo12" parent="Kvarter1" instance=ExtResource("12_rii4x")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.37757, -1.63926, 34.6558)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.37757, -1.63926, 34.423)
 size = 2
 
 [node name="Bigrect2" parent="Kvarter1" instance=ExtResource("11_ah547")]
@@ -251,3 +253,19 @@ transform = Transform3D(0.926496, 0, 0.376305, 0, 1, 0, -0.376305, 0, 0.926496, 
 
 [node name="barrel3" parent="." instance=ExtResource("13_hpt5a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.443, 14.5212, 33.032)
+
+[node name="Square" parent="." instance=ExtResource("1_5df2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.44956, 0, 24.1193)
+
+[node name="Square2" parent="." instance=ExtResource("1_5df2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.3729, 0, 28.5951)
+size = 2
+
+[node name="Square3" parent="." instance=ExtResource("1_5df2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -24.6326, 0, 30.3076)
+
+[node name="square_tower" parent="." instance=ExtResource("15_5q252")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.375, 11.6362, 28.6033)
+
+[node name="medrect_tower" parent="." instance=ExtResource("16_ws78c")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -14.8712, 8.4, 8.26282)

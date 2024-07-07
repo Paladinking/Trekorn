@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://brah4jxbb807i"]
+
+[ext_resource type="PackedScene" uid="uid://ix2mf5wsqt8a" path="res://Assets/Buildings/TempBlockout/medrect_top_2.glb" id="1_t1c01"]
+
+[node name="medrect_tower" instance=ExtResource("1_t1c01")]

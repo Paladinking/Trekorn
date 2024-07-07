@@ -11,5 +11,4 @@ points = PackedVector3Array(-1.06706, -0.0513896, -1.0228, 1.067, 2.0825, 1.1113
 transform = Transform3D(0.906794, 0, 0, 0, 0.906794, 0, 0, 0, 0.906794, 0, 0, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
 shape = SubResource("ConvexPolygonShape3D_qaqau")
