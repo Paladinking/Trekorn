@@ -170,8 +170,8 @@ func _process(delta):
 	var max_dist = CAMERA_MAX_DISTANCE
 	if shoulder_cam:
 		max_dist = SHOULDER_MAX_DISTANCE
-		$CameraRay.position = Vector3(0.8, 1.5, 0).rotated(Vector3.UP, $Model.rotation.y)
-		camera_target_position = Vector3(0.8, 1.5, 0).rotated(Vector3.UP, $Model.rotation.y)
+		$CameraRay.position = Vector3(0.5, 1.5, 0).rotated(Vector3.UP, $Model.rotation.y)
+		camera_target_position = Vector3(0.5, 1.5, 0).rotated(Vector3.UP, $Model.rotation.y)
 	else:
 		$CameraRay.position = Vector3(0, 1.5, 0)
 		camera_target_position = Vector3(0, 1.5, 0)
@@ -182,7 +182,7 @@ func _process(delta):
 		sin(camera_angle_x) * cos(camera_angle_y)
 	) * max_dist
 	if shoulder_cam:
-		camera_position += Vector3(1, 0, 0).rotated(Vector3.UP, $Model.rotation.y)
+		camera_position += Vector3(0.5, 0, 0).rotated(Vector3.UP, $Model.rotation.y)
 	$Camera.position = camera_position
 	$Camera.look_at(global_position + camera_target_position)
 	$CameraRay.target_position = camera_position
@@ -209,11 +209,11 @@ func _process(delta):
 		#print("Collission Lower")
 	#if $Model/UpperClimbRay.is_colliding():
 		#print("Collission upper")
-	if Input.is_action_pressed("shoot") and shoot_cooldown <= 0:
+	if shoulder_cam and Input.is_action_pressed("shoot") and shoot_cooldown <= 0:
 		var b = bullet.instantiate()
-		var dir: Vector3 = -$Model.global_basis.z
-		b.position = Vector3(position.x, position.y + 1, position.z) + 2 * dir
-		b.linear_velocity = 500 * dir
+		var dir: Vector3 = (camera_target_position - camera_position).normalized()
+		b.position = to_global(camera_target_position + 2 * dir)
+		b.linear_velocity = to_global(500 * dir)
 		get_tree().root.add_child(b)
 		shoot_cooldown = SHOOT_COOLDOWN
 	shoot_cooldown -= delta
