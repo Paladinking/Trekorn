@@ -223,6 +223,11 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		camera_angle_x += event.relative.y / 200
 		camera_angle_y -= event.relative.x / 200
+		if camera_angle_y > 2 * PI:
+			camera_angle_y -= 2 * PI
+		elif camera_angle_y < -2 * PI:
+			camera_angle_y += 2 * PI
+		camera_angle_x = clamp(camera_angle_x, CAMERA_ANGLE_X_MIN, CAMERA_ANGLE_X_MAX)
 
 func _unhandled_key_input(event):
 	#if event.is_pressed() and event.physical_keycode == KEY_P:
