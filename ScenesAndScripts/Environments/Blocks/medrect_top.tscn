@@ -11,7 +11,6 @@ script = ExtResource("1_4nmpe")
 metadata/Rect = [ExtResource("3_pb1pj")]
 
 [node name="default" parent="." instance=ExtResource("3_pb1pj")]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 

@@ -10,7 +10,7 @@ size = Vector3(7.5, 4, 5)
 script = ExtResource("1_pwer8")
 metadata/Rect = [ExtResource("3_546hl")]
 
-[node name="default" parent="." instance=ExtResource("3_546hl")]
+[node name="default" type="Node3D" parent="."]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 
