@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://b8i2al5jacohu"]
+[gd_scene load_steps=16 format=3 uid="uid://b8i2al5jacohu"]
 
 [ext_resource type="PackedScene" uid="uid://b223a2ai2d6bq" path="res://ScenesAndScripts/Environments/ModularBlocks/square.tscn" id="1_5df2j"]
 [ext_resource type="PackedScene" uid="uid://oviov3wpf55v" path="res://ScenesAndScripts/Environments/Buildings/staircase.tscn" id="2_nljkc"]
@@ -51,6 +51,9 @@ adjustment_saturation = 0.66
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_8p8u2"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_8tof5"]
+size = Vector3(10, 1, 1)
+
 [node name="World" type="Node3D"]
 
 [node name="Floor" type="StaticBody3D" parent="."]
@@ -89,9 +92,20 @@ transform = Transform3D(-0.999933, 0, -0.0115887, 0, 1, 0, 0.0115887, 0, -0.9999
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(0.999992, -0.00333509, -0.00237966, 0.00332621, 0.999987, -0.00372215, 0.00239206, 0.0037142, 0.99999, 0, 0, 0)
 
-[node name="Walls" type="Node" parent="."]
+[node name="LongWall2" type="StaticBody3D" parent="."]
+transform = Transform3D(0.748493, 0, -0.663143, 0, 1, 0, 0.663143, 0, 0.748493, -6.40212, 3.87063, 2.3298)
 
-[node name="staircase2" parent="Walls" instance=ExtResource("2_nljkc")]
+[node name="CSGBox3D" type="CSGBox3D" parent="LongWall2"]
+size = Vector3(10, 1, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LongWall2"]
+shape = SubResource("BoxShape3D_8tof5")
+
+[editable path="Square2"]
+[node name="staircase" parent="." instance=ExtResource("2_nljkc")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 59.4297, 7.88932, 1.7337)
+
+[node name="staircase2" parent="." instance=ExtResource("2_nljkc")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 14.673, -4.40458, -0.83779)
 
 [node name="staircase" parent="Walls" instance=ExtResource("2_nljkc")]
