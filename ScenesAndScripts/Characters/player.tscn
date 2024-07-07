@@ -1,8 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://f0imj174l2fx"]
+[gd_scene load_steps=11 format=3 uid="uid://f0imj174l2fx"]
 
 [ext_resource type="Script" path="res://ScenesAndScripts/Characters/player.gd" id="1_pmtne"]
 [ext_resource type="PackedScene" uid="uid://c4obqn0n00js2" path="res://ScenesAndScripts/Characters/main_character.tscn" id="2_5rm6l"]
+[ext_resource type="PackedScene" uid="uid://bna74a4amksq1" path="res://Assets/Characters/ag42b.glb" id="3_bcbxh"]
 [ext_resource type="AudioStream" uid="uid://bgy71y3nd8c37" path="res://Assets/Audio/shoot.mp3" id="3_gv4pm"]
+[ext_resource type="AudioStream" uid="uid://c5wvde1njklpb" path="res://Assets/Audio/Step1.mp3" id="3_l6g36"]
 [ext_resource type="AudioStream" uid="uid://b0284nxybi6io" path="res://Assets/Audio/dead.mp3" id="4_p7fue"]
 [ext_resource type="Script" path="res://ScenesAndScripts/Characters/walk_audio.gd" id="5_pnsf0"]
 [ext_resource type="AudioStream" uid="uid://b0a1yvhp3f3hx" path="res://Assets/Audio/Step.mp3" id="6_qo3sc"]
@@ -59,6 +61,13 @@ target_position = Vector3(0, 0, -0.7)
 [node name="LowerClimbRay" type="RayCast3D" parent="Model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6861, 0)
 target_position = Vector3(0, 0, -0.7)
+
+[node name="ag42b" parent="Model" instance=ExtResource("3_bcbxh")]
+transform = Transform3D(-4.37114e-08, 0.965926, -0.258819, 0, 0.258819, 0.965926, 1, 4.2222e-08, -1.13133e-08, 0, 1.55605, 0.162422)
+
+[node name="LandingAudio" type="AudioStreamPlayer3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+stream = ExtResource("3_l6g36")
 
 [node name="ShootAudio" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("3_gv4pm")
