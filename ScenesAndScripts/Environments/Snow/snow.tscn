@@ -1,14 +1,14 @@
 [gd_scene load_steps=8 format=3 uid="uid://b15weq2cvwlki"]
 
 [ext_resource type="Shader" uid="uid://bciiijteqacrd" path="res://ScenesAndScripts/Environments/Snow/snow_material.tres" id="1_vpdkj"]
-[ext_resource type="Texture2D" uid="uid://b7cpfljchh1b8" path="res://Assets/Images/mask.png" id="2_olpjp"]
 [ext_resource type="Shader" uid="uid://cq8u1rv878qa6" path="res://ScenesAndScripts/Environments/Snow/snow_emitter.tres" id="3_lpmgg"]
+[ext_resource type="Texture2D" uid="uid://2ibe50mhs71" path="res://Assets/Images/partikelgrej.png" id="3_ugm8g"]
 [ext_resource type="Script" path="res://ScenesAndScripts/Environments/Snow/snow.gd" id="4_n538w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wvmek"]
 render_priority = 0
 shader = ExtResource("1_vpdkj")
-shader_parameter/Mask = ExtResource("2_olpjp")
+shader_parameter/Mask = ExtResource("3_ugm8g")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k6c10"]
 shader = ExtResource("3_lpmgg")

@@ -18,12 +18,12 @@ default_input_values = [0, 0.0, 1, 10.0]
 default_input_values = [1, -15.0, 2, 15.0]
 
 [sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_1vo7d"]
-constant = 0.216
+constant = 0.175
 
 [sub_resource type="VisualShaderNodeParticleRandomness" id="VisualShaderNodeParticleRandomness_yqijl"]
 
 [sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_i6rha"]
-constant = 30.0
+constant = 50.0
 
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_0w1kb"]
 default_input_values = [0, 0.0, 1, -1.0]
@@ -130,7 +130,7 @@ void start() {
 
 
 // FloatConstant:20
-		float n_out20p0 = 30.000000;
+		float n_out20p0 = 50.000000;
 
 
 // FloatOp:21
@@ -164,7 +164,7 @@ void start() {
 
 
 // FloatConstant:19
-		float n_out19p0 = 0.216000;
+		float n_out19p0 = 0.175000;
 
 
 // ParticleRandomness:2
@@ -198,7 +198,7 @@ void start() {
 }
 
 "
-graph_offset = Vector2(-665.791, -157.355)
+graph_offset = Vector2(-1189.48, -176.143)
 mode = 2
 flags/collision_use_scale = false
 flags/disable_force = false
