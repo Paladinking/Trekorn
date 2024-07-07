@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://b8i2al5jacohu"]
+[gd_scene load_steps=23 format=3 uid="uid://b8i2al5jacohu"]
 
 [ext_resource type="PackedScene" uid="uid://b223a2ai2d6bq" path="res://ScenesAndScripts/Environments/ModularBlocks/square.tscn" id="1_5df2j"]
 [ext_resource type="PackedScene" uid="uid://oviov3wpf55v" path="res://ScenesAndScripts/Environments/Buildings/staircase.tscn" id="2_nljkc"]
@@ -16,23 +16,38 @@
 [ext_resource type="PackedScene" uid="uid://beqcpy1bkjtli" path="res://ScenesAndScripts/Environments/Crimscrams/crate.tscn" id="14_rucdr"]
 [ext_resource type="PackedScene" uid="uid://bon2kni2ove5l" path="res://ScenesAndScripts/Environments/Buildings/square_tower.tscn" id="15_5q252"]
 [ext_resource type="PackedScene" uid="uid://brah4jxbb807i" path="res://ScenesAndScripts/Environments/Buildings/medrect_tower.tscn" id="16_ws78c"]
+[ext_resource type="PackedScene" uid="uid://dtkqmv103anq2" path="res://Assets/Buildings/Crimscrams/snowcorner.glb" id="17_gqacf"]
+[ext_resource type="PackedScene" uid="uid://draij52gef6av" path="res://Assets/Buildings/Crimscrams/snow3.glb" id="18_6n5tq"]
+[ext_resource type="PackedScene" uid="uid://bh4ijg21ycqwc" path="res://Assets/Buildings/Crimscrams/snowpile.glb" id="19_ju43b"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_42e4f"]
-albedo_color = Color(0.0901961, 0.0823529, 0.129412, 1)
+albedo_color = Color(0.835294, 0.92549, 0.933333, 1)
 
 [sub_resource type="Environment" id="Environment_axwmf"]
 background_mode = 1
-background_color = Color(0.223529, 0.470588, 0.729412, 1)
-background_energy_multiplier = 0.5
-ambient_light_color = Color(0.580392, 0.772549, 0.960784, 1)
-ambient_light_energy = 4.13
+background_color = Color(0.12549, 0.188235, 0.294118, 1)
+background_energy_multiplier = 1.04
+ambient_light_color = Color(0.0980392, 0.286275, 0.427451, 1)
+ambient_light_energy = 1.51
 tonemap_mode = 2
-tonemap_exposure = 0.8
-tonemap_white = 1.49
+tonemap_exposure = 2.1
+tonemap_white = 1.1
+fog_enabled = true
+fog_light_color = Color(0.207843, 0.360784, 0.701961, 1)
+fog_light_energy = 0.5
+fog_sun_scatter = 0.52
+fog_density = 0.014
+fog_sky_affect = 0.415
 volumetric_fog_enabled = true
-volumetric_fog_density = 0.01
-volumetric_fog_albedo = Color(0.160784, 0.345098, 0.698039, 1)
-volumetric_fog_emission = Color(0.533333, 0.533333, 0.533333, 1)
+volumetric_fog_density = 0.02
+volumetric_fog_albedo = Color(0.337255, 0.533333, 0.639216, 1)
+volumetric_fog_emission = Color(0.321569, 0.423529, 0.556863, 1)
+volumetric_fog_emission_energy = 0.5
+volumetric_fog_length = 139.39
+volumetric_fog_sky_affect = 0.417
+adjustment_enabled = true
+adjustment_brightness = 0.95
+adjustment_saturation = 0.66
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_8p8u2"]
 
@@ -50,12 +65,14 @@ environment = SubResource("Environment_axwmf")
 
 [node name="ReflectionProbe" type="ReflectionProbe" parent="Floor/CSGBox3D/WorldEnvironment"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111.016, 0, 0)
+max_distance = 164.8
 size = Vector3(500, 200, 500)
+ambient_color = Color(0.0941176, 0.243137, 0.396078, 1)
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.965926, 0.25, -0.0669873, -0.0276334, 0.356955, 0.933713, 0.25734, -0.900046, 0.3517, 0, 10, 1.5)
-light_color = Color(0.690196, 0.552941, 0.396078, 1)
-light_energy = 3.424
+light_color = Color(0.556863, 0.764706, 0.823529, 1)
+light_energy = 1.842
 shadow_enabled = true
 
 [node name="WorldFloor" type="StaticBody3D" parent="."]
@@ -269,3 +286,29 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.375, 11.6362, 28.6033)
 
 [node name="medrect_tower" parent="." instance=ExtResource("16_ws78c")]
 transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -14.8712, 8.4, 8.26282)
+
+[node name="Medrect" parent="." instance=ExtResource("10_8gj64")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 45.4292, 13.5617, 28.6079)
+
+[node name="Square4" parent="." instance=ExtResource("1_5df2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 44.6642, 13.5642, 37.2742)
+size = 3
+
+[node name="Square5" parent="." instance=ExtResource("1_5df2j")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.8626, 13.5642, 37.2742)
+size = 3
+
+[node name="square_tower2" parent="." instance=ExtResource("15_5q252")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.8604, 29.9642, 37.2617)
+
+[node name="snowcorner2" parent="." instance=ExtResource("17_gqacf")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -4.64594, 0, 17.2595)
+
+[node name="snow32" parent="." instance=ExtResource("18_6n5tq")]
+transform = Transform3D(-0.647189, 0, 0.76233, 0, 1, 0, -0.76233, 0, -0.647189, 2.82297, 0, -6.79119)
+
+[node name="snowpile2" parent="." instance=ExtResource("19_ju43b")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.90629, 0.132789, 5.51455)
+
+[node name="snowpile3" parent="." instance=ExtResource("19_ju43b")]
+transform = Transform3D(-0.490098, 0, -0.871668, 0, 1, 0, 0.871668, 0, -0.490098, 7.01837, 0.132789, 5.70688)
