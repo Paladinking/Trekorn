@@ -112,6 +112,7 @@ func _physics_process(delta):
 	if wall_jump_time > 0 and jump_press_time > 0:
 		$Model/AnimationPlayer.stop(true)
 		$Model/AnimationPlayer.play("wall_jump")
+		$LandingAudio.play()
 		wall_jump_time = 0
 		jump_press_time = 0
 		jump_time = MAX_JUMP_TIME
@@ -144,7 +145,6 @@ func _physics_process(delta):
 	if not direction.is_zero_approx() and not shoulder_cam:
 		$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.FORWARD, Vector3.UP)
 
-	
 	if is_on_floor():
 		if velocity.y == 0 and not velocity.is_zero_approx():
 			$Model/AnimationPlayer.play("run")
@@ -161,7 +161,10 @@ func _physics_process(delta):
 	else:
 		fall_time = 0
 
+	var was_on_floor = is_on_floor()
 	move_and_slide()
+	if not was_on_floor and is_on_floor() and not $WalkAudio.walking and not $LandingAudio.playing:
+		$LandingAudio.play()
 
 
 func _process(delta):
