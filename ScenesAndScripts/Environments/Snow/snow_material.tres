@@ -1,10 +1,10 @@
 [gd_resource type="VisualShader" load_steps=8 format=3 uid="uid://bciiijteqacrd"]
 
 [sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_ewm25"]
-constant = Color(0.125677, 0.404915, 0.300595, 1)
+constant = Color(0.111844, 0.0645073, 1, 1)
 
 [sub_resource type="VisualShaderNodeColorConstant" id="VisualShaderNodeColorConstant_bsdyk"]
-constant = Color(0.730957, 0.230775, 0.131545, 1)
+constant = Color(0.759285, 0.645717, 0.985593, 1)
 
 [sub_resource type="VisualShaderNodeInput" id="VisualShaderNodeInput_73o5c"]
 input_name = "uv"
@@ -33,11 +33,11 @@ uniform sampler2D Mask : source_color;
 
 void fragment() {
 // ColorConstant:2
-	vec4 n_out2p0 = vec4(0.125677, 0.404915, 0.300595, 1.000000);
+	vec4 n_out2p0 = vec4(0.111844, 0.064507, 1.000000, 1.000000);
 
 
 // ColorConstant:3
-	vec4 n_out3p0 = vec4(0.730957, 0.230775, 0.131545, 1.000000);
+	vec4 n_out3p0 = vec4(0.759285, 0.645717, 0.985593, 1.000000);
 
 
 // Input:4
@@ -64,6 +64,7 @@ void fragment() {
 
 }
 "
+graph_offset = Vector2(-509.112, -156.255)
 modes/cull = 2
 nodes/fragment/2/node = SubResource("VisualShaderNodeColorConstant_ewm25")
 nodes/fragment/2/position = Vector2(-160, 60)
