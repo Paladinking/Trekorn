@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://bu2f1qy4iyfxf"]
 
 [ext_resource type="Script" path="res://ScenesAndScripts/Environments/Blocks/block.gd" id="1_0hshq"]
-[ext_resource type="PackedScene" uid="uid://udgaof474dtp" path="res://Assets/Buildings/TempBlockout/square_top_2.glb" id="3_as3bu"]
-[ext_resource type="PackedScene" uid="uid://n5ps4v4n1ygy" path="res://Assets/Buildings/TempBlockout/square_top_1.glb" id="3_qn3xe"]
+[ext_resource type="PackedScene" uid="uid://dyq5csqncodvm" path="res://Assets/Buildings/TempBlockout/square_top_2.glb" id="3_as3bu"]
+[ext_resource type="PackedScene" uid="uid://3om2ig18136q" path="res://Assets/Buildings/TempBlockout/square_top_1.glb" id="3_qn3xe"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jnfjf"]
 size = Vector3(5, 0.4, 5)

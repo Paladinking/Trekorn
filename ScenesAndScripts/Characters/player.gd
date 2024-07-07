@@ -19,6 +19,8 @@ const WALL_JUMP_MARGIN = 0.25
 var wall_jump_time = 0.0
 var last_collision_direction : Vector3 = Vector3.ZERO
 
+var fall_time: float = 0.0
+
 const CAMERA_MOVE_SPEED = 5
 const CAMERA_MAX_DISTANCE = 10
 const SHOULDER_MAX_DISTANCE = 3
@@ -142,13 +144,22 @@ func _physics_process(delta):
 	if not direction.is_zero_approx() and not shoulder_cam:
 		$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.FORWARD, Vector3.UP)
 
+	
 	if is_on_floor():
 		if velocity.y == 0 and not velocity.is_zero_approx():
 			$Model/AnimationPlayer.play("run")
+			$WalkAudio.start_walk()
+		else:
+			$WalkAudio.stop_walk()
 	else:
+		$WalkAudio.stop_walk()
 		#$Model/AnimationPlayer.pause()
 		#velocity.y -= gravity * delta
 		pass
+	if not is_on_wall() and not is_on_floor():
+		fall_time += delta
+	else:
+		fall_time = 0
 
 	move_and_slide()
 
@@ -170,8 +181,8 @@ func _process(delta):
 	var max_dist = CAMERA_MAX_DISTANCE
 	if shoulder_cam:
 		max_dist = SHOULDER_MAX_DISTANCE
-		$CameraRay.position = Vector3(0.8, 1.5, 0).rotated(Vector3.UP, $Model.rotation.y)
-		camera_target_position = Vector3(0.8, 1.5, 0).rotated(Vector3.UP, $Model.rotation.y)
+		$CameraRay.position = Vector3(0.5, 1.5, 0).rotated(Vector3.UP, $Model.rotation.y)
+		camera_target_position = Vector3(0.5, 1.5, 0).rotated(Vector3.UP, $Model.rotation.y)
 	else:
 		$CameraRay.position = Vector3(0, 1.5, 0)
 		camera_target_position = Vector3(0, 1.5, 0)
@@ -182,12 +193,13 @@ func _process(delta):
 		sin(camera_angle_x) * cos(camera_angle_y)
 	) * max_dist
 	if shoulder_cam:
-		camera_position += Vector3(1, 0, 0).rotated(Vector3.UP, $Model.rotation.y)
+		camera_position += Vector3(0.5, 0, 0).rotated(Vector3.UP, $Model.rotation.y)
 	$Camera.position = camera_position
 	$Camera.look_at(global_position + camera_target_position)
 	$CameraRay.target_position = camera_position
+	$CameraArea.position = camera_position
 
-	if $CameraRay.is_colliding():
+	if $CameraRay.is_colliding() and ($CameraArea.has_overlapping_bodies() or not shoulder_cam):
 		var camera_ray_collision_distance = $CameraRay.position.distance_to($CameraRay.get_collision_point() - $CameraRay.global_position + $CameraRay.position)
 		if camera_ray_collision_distance < max_dist:
 			var to_move_camera = max_dist - camera_ray_collision_distance
@@ -203,18 +215,21 @@ func _process(delta):
 
 	if shoulder_cam:
 		$Model.rotation.y = camera_angle_y
-		
+	if fall_time > 1.4 and not $FallAudio.playing:
+		if not $FloorRay.is_colliding():
+			$FallAudio.play()
 	#if $Model/LowerClimbRay.is_colliding():
 		#print("Collission Lower")
 	#if $Model/UpperClimbRay.is_colliding():
 		#print("Collission upper")
-	if Input.is_action_pressed("shoot") and shoot_cooldown <= 0:
+	if shoulder_cam and Input.is_action_pressed("shoot") and shoot_cooldown <= 0:
 		var b = bullet.instantiate()
-		var dir: Vector3 = -$Model.global_basis.z
-		b.position = Vector3(position.x, position.y + 1, position.z) + 2 * dir
-		b.linear_velocity = 500 * dir
+		var dir: Vector3 = (camera_target_position - camera_position).normalized()
+		b.position = to_global(camera_target_position + 2 * dir)
+		b.linear_velocity = to_global(500 * dir)
 		get_tree().root.add_child(b)
 		shoot_cooldown = SHOOT_COOLDOWN
+		$ShootAudio.play()
 	shoot_cooldown -= delta
 		
 #var p = false
@@ -222,6 +237,11 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		camera_angle_x += event.relative.y / 200
 		camera_angle_y -= event.relative.x / 200
+		if camera_angle_y > 2 * PI:
+			camera_angle_y -= 2 * PI
+		elif camera_angle_y < -2 * PI:
+			camera_angle_y += 2 * PI
+		camera_angle_x = clamp(camera_angle_x, CAMERA_ANGLE_X_MIN, CAMERA_ANGLE_X_MAX)
 
 func _unhandled_key_input(event):
 	#if event.is_pressed() and event.physical_keycode == KEY_P:

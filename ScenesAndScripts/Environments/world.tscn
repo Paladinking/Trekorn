@@ -56,7 +56,7 @@ shadow_enabled = true
 shape = SubResource("WorldBoundaryShape3D_8p8u2")
 
 [node name="LongWall" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.890748, 6.34184)
+transform = Transform3D(0.748493, 0, -0.663143, 0, 1, 0, 0.663143, 0, 0.748493, -6.40212, 1.41793, 2.3298)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LongWall"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0858517, 0)

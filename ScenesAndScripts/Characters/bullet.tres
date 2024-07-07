@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" format=3 uid="uid://dg776g0cfhpe3"]
+[gd_resource type="VisualShader" format=3 uid="uid://0e7lso3ye023"]
 
 [resource]
 code = "shader_type spatial;
@@ -7,5 +7,4 @@ render_mode blend_mix, depth_draw_opaque, cull_back, diffuse_lambert, specular_s
 
 
 "
-graph_offset = Vector2(-203.446, -43.843)
-nodes/fragment/0/position = Vector2(480, 40)
+graph_offset = Vector2(-180, 117)
