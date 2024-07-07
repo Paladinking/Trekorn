@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://1mkt4372sgvt"]
+
+[ext_resource type="Script" path="res://ScenesAndScripts/Characters/bullet_trail.gd" id="1_me0kb"]
+[ext_resource type="Shader" uid="uid://cm7vbedjky5lk" path="res://ScenesAndScripts/Characters/trail.tres" id="2_ntpjh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7whls"]
+render_priority = 0
+shader = ExtResource("2_ntpjh")
+shader_parameter/Alpha = null
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_wr7i8"]
+
+[node name="BulletTrail" type="Node3D"]
+script = ExtResource("1_me0kb")
+
+[node name="Trail" type="MeshInstance3D" parent="."]
+material_override = SubResource("ShaderMaterial_7whls")
+mesh = SubResource("ImmediateMesh_wr7i8")

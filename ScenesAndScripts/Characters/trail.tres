@@ -1,0 +1,30 @@
+[gd_resource type="VisualShader" load_steps=2 format=3 uid="uid://cm7vbedjky5lk"]
+
+[sub_resource type="VisualShaderNodeFloatParameter" id="VisualShaderNodeFloatParameter_6rxl6"]
+parameter_name = "Alpha"
+
+[resource]
+code = "shader_type spatial;
+render_mode blend_mix, depth_draw_opaque, cull_disabled, diffuse_lambert, specular_schlick_ggx;
+
+uniform float Alpha;
+
+
+
+void fragment() {
+// FloatParameter:2
+	float n_out2p0 = Alpha;
+
+
+// Output:0
+	ALBEDO = vec3(n_out2p0);
+	ALPHA = n_out2p0;
+
+
+}
+"
+modes/cull = 2
+nodes/fragment/0/position = Vector2(400, 140)
+nodes/fragment/2/node = SubResource("VisualShaderNodeFloatParameter_6rxl6")
+nodes/fragment/2/position = Vector2(-160, 200)
+nodes/fragment/connections = PackedInt32Array(2, 0, 0, 1, 2, 0, 0, 0)
