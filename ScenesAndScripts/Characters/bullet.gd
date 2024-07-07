@@ -15,20 +15,6 @@ func _ready():
 	contact_monitor = true
 	max_contacts_reported = 1
 	body_entered.connect(_on_body_entered)
-	
-	#player_pos = position
-	
-	#bullet_trail = bullet_trail_asset.instantiate()
-	
-	
-	#bullet_trail.point_end = self.linear_velocity.normalized() * trail_step_size
-	#bullet_trail.point_start = position#self.linear_velocity.normalized() * 5000 + current_pos
-	
-	#get_tree().root.add_child.call_deferred(bullet_trail)
-
-	# Prepare attributes for add_vertex.
-	
-	
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -44,13 +30,13 @@ func _process(_delta):
 func spawn_trail():
 	var position1 = Vector3()
 	var position2 = Vector3()
-	if player_pos.distance_to(position) < trail_step_size * self.linear_velocity.length():
+	if position.distance_to(player_pos) < position.distance_to(self.linear_velocity * (-trail_step_size) + player_pos):
 		position1 = position
 		position2 = player_pos
 	else:
 		position1 = position
 		#position2 = (position-player_pos).normalized() * (-trail_step_size) + player_pos
-		position2 =  self.linear_velocity * (-trail_step_size) + player_pos
+		position2 = self.linear_velocity * (-trail_step_size) + player_pos
 	
 	bullet_trail = bullet_trail_asset.instantiate()
 	bullet_trail.point_end = position1
