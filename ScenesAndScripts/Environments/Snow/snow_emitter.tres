@@ -18,7 +18,7 @@ default_input_values = [0, 0.0, 1, 10.0]
 default_input_values = [1, -15.0, 2, 15.0]
 
 [sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_1vo7d"]
-constant = 0.125
+constant = 0.175
 
 [sub_resource type="VisualShaderNodeParticleRandomness" id="VisualShaderNodeParticleRandomness_yqijl"]
 
@@ -164,7 +164,7 @@ void start() {
 
 
 // FloatConstant:19
-		float n_out19p0 = 0.125000;
+		float n_out19p0 = 0.175000;
 
 
 // ParticleRandomness:2
