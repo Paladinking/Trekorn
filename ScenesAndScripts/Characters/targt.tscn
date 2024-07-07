@@ -1,0 +1,43 @@
+[gd_scene load_steps=5 format=3 uid="uid://chyt3plx5kr1r"]
+
+[ext_resource type="PackedScene" uid="uid://bd5rkyqlqclfn" path="res://Assets/Characters/guardblue.glb" id="1_5dcme"]
+[ext_resource type="Script" path="res://ScenesAndScripts/Characters/targt.gd" id="1_a14sd"]
+[ext_resource type="AudioStream" uid="uid://b0284nxybi6io" path="res://Assets/Audio/dead.mp3" id="3_nu3ct"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vhb2t"]
+radius = 0.8
+height = 5.2
+
+[node name="Targt" type="CharacterBody3D"]
+script = ExtResource("1_a14sd")
+
+[node name="guardblue" parent="." instance=ExtResource("1_5dcme")]
+
+[node name="Skeleton3D" parent="guardblue/Armature_004" index="0"]
+bones/1/rotation = Quaternion(0.144295, 0.000223175, 0.00631772, 0.989515)
+bones/3/rotation = Quaternion(-0.761809, 0.187189, -0.304432, 0.540303)
+bones/4/rotation = Quaternion(0.027609, -0.00318795, -0.00225008, 0.999611)
+bones/5/rotation = Quaternion(-0.156947, -0.0105326, 0.0392207, 0.986772)
+bones/6/position = Vector3(0.142261, 0.256487, -0.109124)
+bones/8/rotation = Quaternion(-0.574081, 0.115142, 0.423003, 0.69155)
+bones/9/rotation = Quaternion(0.590138, -0.061009, 0.287708, 0.751824)
+bones/10/rotation = Quaternion(0.54871, 0.059059, 0.0455332, 0.83268)
+bones/15/rotation = Quaternion(-0.0550188, 0.00405462, -0.024612, 0.998174)
+bones/19/rotation = Quaternion(-0.612355, -0.00836577, -0.00776962, 0.7905)
+bones/20/rotation = Quaternion(-0.0916335, 0.0019549, 0.0106071, 0.995734)
+bones/21/rotation = Quaternion(-0.0746688, -3.15816e-08, 0.0621973, 0.995267)
+bones/22/rotation = Quaternion(0.106874, -0.166587, 0.410169, 0.890274)
+bones/23/rotation = Quaternion(0.119019, -0.181472, -0.75427, 0.61966)
+bones/26/rotation = Quaternion(-0.636159, 0.00841897, -0.0119136, 0.77142)
+bones/27/rotation = Quaternion(-0.0586542, -0.00163467, -0.016174, 0.998146)
+bones/28/rotation = Quaternion(-0.0746688, 3.15816e-08, -0.0621973, 0.995267)
+bones/29/rotation = Quaternion(0.110241, 0.148594, -0.388767, 0.902567)
+bones/30/rotation = Quaternion(0.110057, 0.161683, 0.771108, 0.605919)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_vhb2t")
+
+[node name="Death" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_nu3ct")
+
+[editable path="guardblue"]
