@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://ba64r3bcnyakn"]
+
+[ext_resource type="PackedScene" uid="uid://dqraxtpricn72" path="res://Assets/Buildings/wall_straight.glb" id="1_60xbu"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_fwp67"]
+points = PackedVector3Array(-3.86375, 11.28, -5.97555, 4.06237, 38.716, 6.21848, 4.06237, 38.716, -5.97555, 4.06237, -0.304852, 6.21848, 4.06237, -0.304852, -5.97555, -3.50756, 1.44869, 5.6705, -0.814646, 33.8346, 6.21848, 1.01249, 38.716, -5.97555, -3.5589, 1.19595, -5.50655, -3.86375, 11.28, 6.21848, -0.814646, 33.8346, -5.97555, 1.01249, 38.716, 6.21848)
+
+[node name="wall" instance=ExtResource("1_60xbu")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_fwp67")

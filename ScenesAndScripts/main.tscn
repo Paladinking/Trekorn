@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://0rcvhl6s8un5"]
+[gd_scene load_steps=6 format=3 uid="uid://0rcvhl6s8un5"]
 
 [ext_resource type="PackedScene" uid="uid://b8i2al5jacohu" path="res://ScenesAndScripts/Environments/world.tscn" id="1_afrpm"]
 [ext_resource type="Script" path="res://ScenesAndScripts/main.gd" id="1_wkjhj"]
 [ext_resource type="PackedScene" uid="uid://f0imj174l2fx" path="res://ScenesAndScripts/Characters/player.tscn" id="3_iomdr"]
 [ext_resource type="PackedScene" uid="uid://d36jvboyckstd" path="res://ScenesAndScripts/Characters/bullet.tscn" id="4_to15h"]
+[ext_resource type="PackedScene" uid="uid://c54kk7ra8cv2u" path="res://ScenesAndScripts/Environments/ModularBlocks/medrect.tscn" id="5_6s5gl"]
 
 [node name="main" type="Node3D"]
 script = ExtResource("1_wkjhj")
@@ -16,4 +17,7 @@ transform = Transform3D(1, 0, 0, 0, 0.150847, 0.988557, 0, -0.988557, 0.150847, 
 [node name="Player" parent="." instance=ExtResource("3_iomdr")]
 
 [node name="Bullet" parent="." instance=ExtResource("4_to15h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.62312, 0.960385, -2.88006)
+transform = Transform3D(1, 0.00093435, -0.000223814, -0.000934242, 0.999999, 0.00045878, 0.000224265, -0.00045856, 1, 2.62312, 0.960385, -2.88006)
+
+[node name="Medrect" parent="." instance=ExtResource("5_6s5gl")]
+transform = Transform3D(0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, 0.707107, -5.73522, 0, -1.78634)

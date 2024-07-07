@@ -1,10 +1,9 @@
 [gd_scene load_steps=4 format=3 uid="uid://d36jvboyckstd"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2cis1"]
-albedo_color = Color(0.690196, 0, 0, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_koikl"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_iigdc"]
-material = SubResource("StandardMaterial3D_2cis1")
+material = SubResource("StandardMaterial3D_koikl")
 radius = 0.2
 height = 0.4
 
@@ -19,3 +18,5 @@ mesh = SubResource("SphereMesh_iigdc")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_k8uwa")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
