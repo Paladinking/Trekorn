@@ -108,7 +108,7 @@ bones/66/rotation = Quaternion(0.500001, -0.499999, 0.5, 0.5)
 bones/67/rotation = Quaternion(-0.0166591, -0.000479371, -0.0287636, 0.999447)
 
 [node name="Rokoko Video Character_001_Skeleton_Skeleton3D#Skeleton_Skeleton3D#Jigglebone" type="Node3D" parent="Skeleton/Skeleton3D" index="1"]
-transform = Transform3D(0.00541992, -0.00755732, -0.00367577, -0.00430019, -0.00625191, 0.00651321, -0.00722031, -0.00194946, -0.00663828, 0.938277, 2.23723, -0.251671)
+transform = Transform3D(0.00541993, -0.00755731, -0.00367578, -0.00430017, -0.00625193, 0.00651321, -0.00722031, -0.00194946, -0.00663828, 0.938276, 2.23723, -0.25167)
 top_level = true
 script = ExtResource("2_1insv")
 bone_name = "scarf2"
@@ -119,7 +119,7 @@ gravity = Vector3(3, 1, 0)
 forward_axis = 4
 
 [node name="Rokoko Video Character_001_Skeleton_Skeleton3D#Skeleton_Skeleton3D#Jigglebone2" type="Node3D" parent="Skeleton/Skeleton3D" index="2"]
-transform = Transform3D(0.00243742, -0.00791117, -0.00561002, -0.00445344, -0.00605156, 0.0065989, -0.00861544, 0.000889965, -0.00499821, 0.865852, 2.17734, -0.270355)
+transform = Transform3D(0.00243745, -0.00791115, -0.00561003, -0.00445341, -0.00605158, 0.0065989, -0.00861545, 0.000889932, -0.0049982, 0.865852, 2.17734, -0.270348)
 top_level = true
 script = ExtResource("2_1insv")
 bone_name = "scarf3"
@@ -130,7 +130,7 @@ gravity = Vector3(3, 1, 0)
 forward_axis = 4
 
 [node name="Rokoko Video Character_001_Skeleton_Skeleton3D#Skeleton_Skeleton3D#Jigglebone3" type="Node3D" parent="Skeleton/Skeleton3D" index="3"]
-transform = Transform3D(0.000118103, -0.00733293, -0.0067981, -0.00226031, -0.00664218, 0.00712548, -0.00974048, 0.00145243, -0.00173592, 0.731248, 2.24688, -0.261318)
+transform = Transform3D(0.000118094, -0.00733306, -0.00679795, -0.00226034, -0.00664203, 0.0071256, -0.00974048, 0.00145242, -0.00173596, 0.731268, 2.24684, -0.261318)
 top_level = true
 script = ExtResource("2_1insv")
 bone_name = "scarf4"
@@ -141,7 +141,7 @@ gravity = Vector3(2, 1, 0)
 forward_axis = 4
 
 [node name="Rokoko Video Character_001_Skeleton_Skeleton3D#Skeleton_Skeleton3D#Jigglebone4" type="Node3D" parent="Skeleton/Skeleton3D" index="4"]
-transform = Transform3D(0.00310294, -0.00885329, -0.00346279, -0.00506482, -0.00462216, 0.00727896, -0.00804483, -0.000504782, -0.00591826, 0.615578, 2.16475, -0.189366)
+transform = Transform3D(0.00310294, -0.00885329, -0.00346279, -0.00506482, -0.00462216, 0.00727896, -0.00804483, -0.000504782, -0.00591826, 0.615583, 2.16474, -0.189362)
 top_level = true
 script = ExtResource("2_1insv")
 bone_name = "scarf5"
@@ -151,7 +151,7 @@ gravity = Vector3(0, 0, 0)
 forward_axis = 4
 
 [node name="Rokoko Video Character_001_Skeleton_Skeleton3D#Skeleton_Skeleton3D#Jigglebone5" type="Node3D" parent="Skeleton/Skeleton3D" index="5"]
-transform = Transform3D(0.00305741, -0.00880672, -0.00361855, -0.00487118, -0.00471232, 0.00735293, -0.0081807, -0.000485433, -0.00573066, 0.469608, 2.10047, -0.199706)
+transform = Transform3D(0.00305741, -0.00880672, -0.00361855, -0.00487118, -0.00471232, 0.00735293, -0.0081807, -0.000485433, -0.00573066, 0.469535, 2.10063, -0.199847)
 top_level = true
 script = ExtResource("2_1insv")
 bone_name = "scarf6"
@@ -161,7 +161,7 @@ gravity = Vector3(0, 1, 0)
 forward_axis = 4
 
 [node name="Rokoko Video Character_001_Skeleton_Skeleton3D#Skeleton_Skeleton3D#Jigglebone6" type="Node3D" parent="Skeleton/Skeleton3D" index="6"]
-transform = Transform3D(0.00215966, -0.00956372, 0.0019675, -0.00582176, 0.000356409, 0.00812281, -0.00783855, -0.00289968, -0.0054908, 0.414144, 1.52376, 0.0343083)
+transform = Transform3D(0.00215966, -0.00956372, 0.0019675, -0.00582176, 0.000356409, 0.00812281, -0.00783855, -0.00289968, -0.0054908, 0.414177, 1.52374, 0.0343406)
 top_level = true
 script = ExtResource("2_1insv")
 bone_name = "scarf7"
