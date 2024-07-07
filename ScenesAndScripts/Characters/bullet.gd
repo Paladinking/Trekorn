@@ -48,7 +48,7 @@ func spawn_trail():
 
 func _on_body_entered(body):
 	if body is Target:
-		body.get_node("Death").play()
+		body.get_shot()
 	print(player_pos.distance_to(position))
 	spawn_trail()
 	queue_free()
