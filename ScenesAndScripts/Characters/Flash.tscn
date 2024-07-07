@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://dmhqiv7pbug84"]
+
+[ext_resource type="Texture2D" uid="uid://by3kp23nldvf" path="res://Assets/Images/flash.png" id="1_p2dko"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_fhcdq"]
+angle_min = -360.0
+angle_max = 360.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6spwl"]
+transparency = 4
+blend_mode = 1
+albedo_texture = ExtResource("1_p2dko")
+emission_enabled = true
+emission = Color(0.581172, 0.338445, 3.85046e-07, 1)
+emission_energy_multiplier = 2.5
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_rf8aw"]
+lightmap_size_hint = Vector2i(7, 7)
+material = SubResource("StandardMaterial3D_6spwl")
+size = Vector2(0.885, 0.94)
+
+[node name="Flash" type="Node3D"]
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+emitting = false
+amount = 5
+lifetime = 0.05
+one_shot = true
+process_material = SubResource("ParticleProcessMaterial_fhcdq")
+draw_pass_1 = SubResource("QuadMesh_rf8aw")
