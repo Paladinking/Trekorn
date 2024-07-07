@@ -81,7 +81,3 @@ script = ExtResource("5_pnsf0")
 [node name="Walk" type="AudioStreamPlayer3D" parent="WalkAudio"]
 stream = ExtResource("6_qo3sc")
 volume_db = 10.619
-
-[node name="FloorRay" type="RayCast3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-target_position = Vector3(0, -8, 0)
