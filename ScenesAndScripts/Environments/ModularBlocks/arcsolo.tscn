@@ -1,0 +1,17 @@
+[gd_scene load_steps=5 format=3 uid="uid://bmahvdl5r7a1q"]
+
+[ext_resource type="Script" path="res://ScenesAndScripts/Environments/ModularBlocks/modular_block.gd" id="1_thdhj"]
+[ext_resource type="PackedScene" uid="uid://c5dvomjnk5vr6" path="res://ScenesAndScripts/Environments/Blocks/arcsolo_mid.tscn" id="2_l64x8"]
+[ext_resource type="PackedScene" uid="uid://b4ribsofx8bd1" path="res://ScenesAndScripts/Environments/Blocks/arcsolo_bot.tscn" id="3_grn7l"]
+[ext_resource type="PackedScene" uid="uid://u7duh6advewj" path="res://ScenesAndScripts/Environments/Blocks/arcsolo_top.tscn" id="4_q81yg"]
+
+[node name="Arcsolo" type="Node3D"]
+script = ExtResource("1_thdhj")
+metadata/Block = ExtResource("2_l64x8")
+
+[node name="bot" parent="." instance=ExtResource("3_grn7l")]
+
+[node name="top" parent="." instance=ExtResource("4_q81yg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+
+[node name="middle" type="Node3D" parent="."]
