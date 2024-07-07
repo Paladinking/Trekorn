@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://beqcpy1bkjtli"]
+
+[ext_resource type="PackedScene" uid="uid://8q3bav8bi8y8" path="res://Assets/Buildings/Crimscrams/cratemesh.glb" id="1_jdceq"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_qaqau"]
+points = PackedVector3Array(-1.06706, -0.0513896, -1.0228, 1.067, 2.0825, 1.1113, -1.06696, 2.0825, 1.1113, -1.06706, 2.0826, -1.0228, 1.0671, -0.0513893, -1.0228, 1.067, -0.0512897, 1.1113, 1.0671, 2.0826, -1.0228, -1.06696, -0.0512897, 1.1113)
+
+[node name="crate" instance=ExtResource("1_jdceq")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+transform = Transform3D(0.906794, 0, 0, 0, 0.906794, 0, 0, 0, 0.906794, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+shape = SubResource("ConvexPolygonShape3D_qaqau")

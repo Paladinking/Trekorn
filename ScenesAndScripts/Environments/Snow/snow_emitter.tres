@@ -1,4 +1,4 @@
-[gd_resource type="VisualShader" load_steps=14 format=3 uid="uid://cq8u1rv878qa6"]
+[gd_resource type="VisualShader" load_steps=16 format=3 uid="uid://cq8u1rv878qa6"]
 
 [sub_resource type="VisualShaderNodeTransformDecompose" id="VisualShaderNodeTransformDecompose_11moc"]
 
@@ -7,20 +7,27 @@
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_rdesk"]
 
 [sub_resource type="VisualShaderNodeParticleRandomness" id="VisualShaderNodeParticleRandomness_836g7"]
-default_input_values = [1, -5.0, 2, 5.0]
+default_input_values = [1, -30.0, 2, 15.0]
 
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_c5v0h"]
 
 [sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_fu45i"]
-default_input_values = [0, 0.0, 1, 3.0]
+default_input_values = [0, 0.0, 1, 10.0]
 
 [sub_resource type="VisualShaderNodeParticleRandomness" id="VisualShaderNodeParticleRandomness_7ex48"]
-default_input_values = [1, -5.0, 2, 5.0]
+default_input_values = [1, -15.0, 2, 15.0]
 
 [sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_1vo7d"]
-constant = 0.307
+constant = 0.175
 
 [sub_resource type="VisualShaderNodeParticleRandomness" id="VisualShaderNodeParticleRandomness_yqijl"]
+
+[sub_resource type="VisualShaderNodeFloatConstant" id="VisualShaderNodeFloatConstant_i6rha"]
+constant = 50.0
+
+[sub_resource type="VisualShaderNodeFloatOp" id="VisualShaderNodeFloatOp_0w1kb"]
+default_input_values = [0, 0.0, 1, -1.0]
+operator = 2
 
 [sub_resource type="VisualShaderNodeVec3Parameter" id="VisualShaderNodeVec3Parameter_w7l2k"]
 parameter_name = "wind_dir"
@@ -122,10 +129,17 @@ void start() {
 		vec3 n_out10p3 = n_out9p0[3].xyz;
 
 
+// FloatConstant:20
+		float n_out20p0 = 50.000000;
+
+
+// FloatOp:21
+		float n_in21p1 = -1.00000;
+		float n_out21p0 = n_out20p0 * n_in21p1;
+
+
 // ParticleRandomness:18
-		float n_in18p1 = -5.00000;
-		float n_in18p2 = 5.00000;
-		float n_out18p0 = __randf_range(__seed, n_in18p1, n_in18p2);
+		float n_out18p0 = __randf_range(__seed, n_out21p0, n_out20p0);
 
 
 // FloatOp:13
@@ -133,14 +147,12 @@ void start() {
 
 
 // FloatOp:17
-		float n_in17p1 = 3.00000;
+		float n_in17p1 = 10.00000;
 		float n_out17p0 = n_out10p1.x + n_in17p1;
 
 
 // ParticleRandomness:14
-		float n_in14p1 = -5.00000;
-		float n_in14p2 = 5.00000;
-		float n_out14p0 = __randf_range(__seed, n_in14p1, n_in14p2);
+		float n_out14p0 = __randf_range(__seed, n_out21p0, n_out20p0);
 
 
 // FloatOp:16
@@ -152,7 +164,7 @@ void start() {
 
 
 // FloatConstant:19
-		float n_out19p0 = 0.307000;
+		float n_out19p0 = 0.175000;
 
 
 // ParticleRandomness:2
@@ -186,6 +198,7 @@ void start() {
 }
 
 "
+graph_offset = Vector2(-1189.48, -176.143)
 mode = 2
 flags/collision_use_scale = false
 flags/disable_force = false
@@ -218,5 +231,9 @@ nodes/start/18/node = SubResource("VisualShaderNodeParticleRandomness_7ex48")
 nodes/start/18/position = Vector2(-560, -100)
 nodes/start/19/node = SubResource("VisualShaderNodeFloatConstant_1vo7d")
 nodes/start/19/position = Vector2(157.871, 252.913)
-nodes/start/connections = PackedInt32Array(4, 0, 0, 1, 2, 0, 7, 0, 6, 0, 7, 1, 7, 0, 0, 7, 9, 0, 10, 0, 11, 0, 0, 4, 10, 0, 13, 0, 13, 0, 11, 0, 10, 2, 16, 0, 14, 0, 16, 1, 16, 0, 11, 2, 17, 0, 11, 1, 10, 1, 17, 0, 18, 0, 13, 1, 19, 0, 0, 5)
+nodes/start/20/node = SubResource("VisualShaderNodeFloatConstant_i6rha")
+nodes/start/20/position = Vector2(-1160, -40)
+nodes/start/21/node = SubResource("VisualShaderNodeFloatOp_0w1kb")
+nodes/start/21/position = Vector2(-960, -140)
+nodes/start/connections = PackedInt32Array(4, 0, 0, 1, 2, 0, 7, 0, 6, 0, 7, 1, 7, 0, 0, 7, 9, 0, 10, 0, 11, 0, 0, 4, 10, 0, 13, 0, 13, 0, 11, 0, 10, 2, 16, 0, 14, 0, 16, 1, 16, 0, 11, 2, 17, 0, 11, 1, 10, 1, 17, 0, 18, 0, 13, 1, 19, 0, 0, 5, 20, 0, 18, 2, 20, 0, 14, 2, 20, 0, 21, 0, 21, 0, 18, 1, 21, 0, 14, 1)
 nodes/process/0/position = Vector2(700, 100)

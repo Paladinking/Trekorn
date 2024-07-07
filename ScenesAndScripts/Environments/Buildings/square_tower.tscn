@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://bon2kni2ove5l"]
+
+[ext_resource type="PackedScene" uid="uid://1wukn30xwms7" path="res://Assets/Buildings/TempBlockout/square_top_3.glb" id="1_u3xox"]
+
+[node name="square_tower" instance=ExtResource("1_u3xox")]

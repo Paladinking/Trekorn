@@ -223,7 +223,8 @@ func _process(delta):
 		var dir: Vector3 = (camera_target_position - camera_position).normalized()
 		b.position = to_global(camera_target_position + 2 * dir)
 		b.player_pos = Vector3(position.x, position.y+1.5, position.z)
-		b.linear_velocity = to_global(500 * dir)
+		b.linear_velocity = to_global(1000 * dir)
+		velocity -= 5 * dir
 		get_tree().root.add_child(b)
 		shoot_cooldown = SHOOT_COOLDOWN
 		$ShootAudio.play()

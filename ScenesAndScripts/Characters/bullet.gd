@@ -14,6 +14,7 @@ const max_bullet_dist: float = 5000
 func _ready():
 	contact_monitor = true
 	max_contacts_reported = 1
+	continuous_cd = true
 	body_entered.connect(_on_body_entered)
 
 
@@ -46,6 +47,8 @@ func spawn_trail():
 
 
 func _on_body_entered(body):
+	if body is Target:
+		body.get_shot()
 	print(player_pos.distance_to(position))
 	spawn_trail()
 	queue_free()
