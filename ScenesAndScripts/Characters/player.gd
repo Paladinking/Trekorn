@@ -52,6 +52,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 const bullet = preload("res://ScenesAndScripts/Characters/bullet.tscn")
 const flash = preload("res://ScenesAndScripts/Characters/Flash.tscn")
 
+
 func _ready():
 	weapon_pos = $ag42b.position
 	#var rot_y = CAMERA_POSITION.rotated(Vector3.UP, camera_angle_y)
@@ -72,10 +73,10 @@ func _physics_process(delta):
 	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).rotated(Vector3.UP, camera_angle_y)
 	if not direction.is_zero_approx():
 		$InputDirection.rotation.y = -Vector3(direction.x, 0, direction.z).signed_angle_to(Vector3.FORWARD, Vector3.UP)
-	
+
 	current_speed = SPEED
 	current_acceleration = ACCELERATION
-	
+
 	if not is_on_floor() and not is_climbing:
 		current_acceleration *= ACCELERATION_IN_AIR_MULT
 	elif not is_on_floor() and is_climbing:
@@ -85,8 +86,6 @@ func _physics_process(delta):
 		current_speed *= SPRINT_SPEED_MULT
 	elif Input.is_action_pressed("slow"):
 		current_speed *= SLOW_DOWN_MULT
-	#if not direction.is_zero_approx() and not shoulder_cam:
-	#	$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.FORWARD, Vector3.UP)
 
 	if is_on_wall_only():
 		wall_jump_time = WALL_JUMP_MARGIN
@@ -139,7 +138,6 @@ func _physics_process(delta):
 			jump_time = 0.0
 			if velocity.y > 0:
 				velocity.y *= 0.5
-				
 
 	if is_on_floor():
 		if velocity.y == 0 and not velocity.is_zero_approx():
@@ -188,7 +186,7 @@ func _process(delta):
 	else:
 		$CameraRay.position = Vector3(0, 1.5, 0)
 		camera_target_position = Vector3(0, 1.5, 0)
-	
+
 	var camera_position = Vector3(
 		sin(camera_angle_x) * sin(camera_angle_y),
 		-cos(camera_angle_x),
@@ -216,17 +214,20 @@ func _process(delta):
 
 	if shoulder_cam and not is_climbing:
 		$Model.rotation.y = camera_angle_y
+		$Model/ag42b.hide()
+		$ag42b.show()
 		
 		$ag42b.basis = $Camera.basis
 		$ag42b.position = camera_target_position
+	else:
+		$Model/ag42b.show()
+		$ag42b.hide()
+
 	if velocity.y < FALL_SCREAM_VELOCITY and not $FallAudio.playing:
 		$FallAudio.play()
 		$ag42b.basis = $Model.basis
 		$ag42b.position = weapon_pos
-	#if $Model/LowerClimbRay.is_colliding():
-		#print("Collission Lower")
-	#if $Model/UpperClimbRay.is_colliding():
-		#print("Collission upper")
+
 	if shoulder_cam and Input.is_action_pressed("shoot") and shoot_cooldown <= 0:
 		var b = bullet.instantiate()
 		var f = flash.instantiate()
@@ -243,8 +244,8 @@ func _process(delta):
 		shoot_cooldown = SHOOT_COOLDOWN
 		$ShootAudio.play()
 	shoot_cooldown -= delta
-		
-#var p = false
+
+
 func _input(event):
 	if event is InputEventMouseMotion:
 		camera_angle_x += event.relative.y / 200
@@ -255,32 +256,32 @@ func _input(event):
 			camera_angle_y += 2 * PI
 		camera_angle_x = clamp(camera_angle_x, CAMERA_ANGLE_X_MIN, CAMERA_ANGLE_X_MAX)
 
+
 func _unhandled_key_input(event):
 	#if event.is_pressed() and event.physical_keycode == KEY_P:
 		#shoulder_cam = not shoulder_cam
 	pass
+
 
 func handle_climbing(delta):
 	if is_on_wall():
 		wall_normal = get_wall_normal()
 		$Model.rotation.y = -wall_normal.signed_angle_to(Vector3.BACK, Vector3.UP)
 	#print(wall_normal)
-	
-	
+
 	if not $Model/LowerClimbRay.is_colliding() or $Model/UpperClimbRay.is_colliding():
 		can_climb_again = true
-		
+
 	if is_climbing and wall_normal.dot($Camera.get_global_transform().basis.z) > 0.1:
 		var side_of_wall = sign(wall_normal.dot($Camera.get_global_transform().basis.z))
 		direction = (Basis(wall_normal.cross(Vector3(0,1,0)), Vector3(0,1,0), wall_normal) * Vector3(-input_dir.x * side_of_wall, 0, input_dir.y))
-	
+
 	#print(wall_normal.dot($Camera.get_global_transform().basis.z))
-	
+
 	if not is_on_floor() and is_climbing:
 		current_acceleration *= ACCELERATION_ON_LEDGE_MULT
 		current_speed *= CLIMB_SPEED_MULT
-	
-		
+
 	ledge_in_front = false
 	if can_climb_again and $Model/LowerClimbRay.is_colliding() and not $Model/UpperClimbRay.is_colliding():
 		ledge_in_front = true
@@ -292,7 +293,7 @@ func handle_climbing(delta):
 		start_climb_smoothness = velocity.y
 		velocity.y = 0.0
 		#print("Climbing")
-	
+
 	if is_climbing:
 		if abs(global_position.y + 1.8 - ledge_height) < 0.01:
 			global_position.y = ledge_height - 1.8
@@ -300,7 +301,7 @@ func handle_climbing(delta):
 			global_position.y -= (global_position.y - ledge_height + 1.8) * 0.5
 
 		print(global_position.y)
-	
+
 	if is_climbing and ledge_leap_cooldown < 0:
 		ledge_leap_cooldown = 0.5
 	ledge_leap_cooldown -= delta
@@ -310,10 +311,11 @@ func handle_climbing(delta):
 
 	if input_dir.y > 0.5:
 		can_climb_again = false
-		
+
 	if not is_on_wall() or not can_climb_again:# or not $InputDirection/LowerClimbRay.is_colliding() or $InputDirection/UpperClimbRay.is_colliding():
 		is_climbing = false
 		#print("Stop climbing")
+
 
 func handle_model():
 	pass
