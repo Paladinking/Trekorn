@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b8i2al5jacohu"]
+[gd_scene load_steps=12 format=3 uid="uid://b8i2al5jacohu"]
 
 [ext_resource type="PackedScene" uid="uid://b223a2ai2d6bq" path="res://ScenesAndScripts/Environments/ModularBlocks/square.tscn" id="1_5df2j"]
 [ext_resource type="PackedScene" uid="uid://cx2024ts6gqsk" path="res://ScenesAndScripts/Environments/ModularBlocks/bigrect.tscn" id="2_h0nmp"]
@@ -7,6 +7,14 @@
 [ext_resource type="PackedScene" uid="uid://bioekcb48opv7" path="res://ScenesAndScripts/Environments/ModularBlocks/curve45.tscn" id="5_dlhbm"]
 [ext_resource type="PackedScene" uid="uid://dutx5l4hn3d0f" path="res://ScenesAndScripts/Environments/ModularBlocks/corner90.tscn" id="6_d5l86"]
 [ext_resource type="PackedScene" uid="uid://bdshivpgppjoj" path="res://ScenesAndScripts/Environments/Buildings/circle.tscn" id="7_5m24u"]
+
+[sub_resource type="Environment" id="Environment_axwmf"]
+background_mode = 1
+background_color = Color(0, 0.482353, 0.65098, 1)
+background_energy_multiplier = 0.5
+volumetric_fog_enabled = true
+volumetric_fog_albedo = Color(0.2, 0.321569, 0.741176, 1)
+volumetric_fog_emission = Color(0.533333, 0.533333, 0.533333, 1)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0mwd8"]
 size = Vector3(5, 0.5, 5)
@@ -23,11 +31,17 @@ size = Vector3(10, 2.5, 1)
 [node name="CSGBox3D" type="CSGBox3D" parent="Floor"]
 size = Vector3(5, 0.5, 5)
 
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Floor/CSGBox3D"]
+environment = SubResource("Environment_axwmf")
+
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
 shape = SubResource("BoxShape3D_0mwd8")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.965926, 0.25, -0.0669873, 0, 0.258819, 0.965926, 0.258819, -0.933013, 0.25, 0, 10, 1.5)
+transform = Transform3D(0.965926, 0.25, -0.0669873, -0.0276334, 0.356955, 0.933713, 0.25734, -0.900046, 0.3517, 0, 10, 1.5)
+light_color = Color(0.690196, 0.552941, 0.396078, 1)
+light_energy = 3.424
+shadow_enabled = true
 
 [node name="WorldFloor" type="StaticBody3D" parent="."]
 
