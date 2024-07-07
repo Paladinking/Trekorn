@@ -10,12 +10,9 @@ data = PackedVector3Array(4.2111, 0, 5.8984, -0.789, 4, 5.8984, 4.2111, 4, 5.898
 script = ExtResource("1_gsox3")
 metadata/Rect = [ExtResource("3_kpv8y")]
 
-[node name="default" parent="." instance=ExtResource("3_kpv8y")]
-
 [node name="StaticBody3DOLD" type="StaticBody3D" parent="."]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3DOLD"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
 shape = SubResource("ConcavePolygonShape3D_md7j4")
 
-[editable path="default"]
+[node name="default" parent="." instance=ExtResource("3_kpv8y")]

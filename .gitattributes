@@ -1,0 +1,4 @@
+*.gd     text eol=lf
+*.tscn   text eol=lf
+*.import text eol=lf
+*.tres   text eol=lf
