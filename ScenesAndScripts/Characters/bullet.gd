@@ -6,7 +6,7 @@ var current_pos: Vector3
 var player_pos: Vector3
 var bullet_trail
 var amount_bullet_trails: int = 0
-const max_bullet_trails: int = 50
+const max_bullet_trails: int = 500
 const trail_step_size: float = 0.05
 const max_bullet_dist: float = 5000
 
@@ -22,7 +22,6 @@ func _ready():
 func _process(_delta):
 	if amount_bullet_trails < max_bullet_trails and player_pos.distance_to(position) < max_bullet_dist:
 		amount_bullet_trails+=1
-		print(amount_bullet_trails)
 		spawn_trail()
 	else: 
 		queue_free()

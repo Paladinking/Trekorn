@@ -39,7 +39,7 @@ volumetric_fog_emission = Color(0.533333, 0.533333, 0.533333, 1)
 [node name="Floor" type="StaticBody3D" parent="."]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Floor"]
-transform = Transform3D(540.557, 0, 0, 0, 0.99722, 0, 0, 0, 609.549, -0.060853, -0.141056, 0.150393)
+transform = Transform3D(540.557, 0, 0, 0, 0.99722, 0, 0, 0, 609.549, -0.061, -0.25, 0.15)
 size = Vector3(5, 0.5, 5)
 material = SubResource("StandardMaterial3D_42e4f")
 
@@ -50,19 +50,14 @@ environment = SubResource("Environment_axwmf")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 111.016, 0, 0)
 size = Vector3(500, 200, 500)
 
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("WorldBoundaryShape3D_8p8u2")
+
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.965926, 0.25, -0.0669873, -0.0276334, 0.356955, 0.933713, 0.25734, -0.900046, 0.3517, 0, 10, 1.5)
 light_color = Color(0.690196, 0.552941, 0.396078, 1)
 light_energy = 3.424
 shadow_enabled = true
-
-[node name="WorldFloor" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldFloor"]
-shape = SubResource("WorldBoundaryShape3D_8p8u2")
-
-[node name="LongWall" type="StaticBody3D" parent="."]
-transform = Transform3D(0.748493, 0, -0.663143, 0, 1, 0, 0.663143, 0, 0.748493, -6.40212, 1.41793, 2.3298)
 
 [node name="Katedral" parent="." instance=ExtResource("8_w417l")]
 transform = Transform3D(-0.999933, 0, -0.0115887, 0, 1, 0, 0.0115887, 0, -0.999933, 96.4043, 5.36625, 27.8583)
