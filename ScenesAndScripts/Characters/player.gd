@@ -215,8 +215,9 @@ func _process(delta):
 
 	if shoulder_cam:
 		$Model.rotation.y = camera_angle_y
-	if fall_time > 1.4 and not $FallAudio.playing and position.y > 10:
-		$FallAudio.play()
+	if fall_time > 1.4 and not $FallAudio.playing:
+		if not $FloorRay.is_colliding():
+			$FallAudio.play()
 	#if $Model/LowerClimbRay.is_colliding():
 		#print("Collission Lower")
 	#if $Model/UpperClimbRay.is_colliding():

@@ -27,10 +27,12 @@ size = Vector3(1, 2, 1)
 
 [node name="Model#LowerClimbRay" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.30709, 0)
+visible = false
 target_position = Vector3(0.7, 0, 0)
 
 [node name="Model#UpperClimbRay" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.961081, 0)
+visible = false
 target_position = Vector3(0.7, 0, 0)
 
 [node name="CameraArea" type="Area3D" parent="."]
@@ -45,6 +47,7 @@ current = true
 
 [node name="CameraRay" type="RayCast3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+visible = false
 
 [node name="Model" parent="." instance=ExtResource("2_5rm6l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0422084, 0, 0)
@@ -69,3 +72,7 @@ script = ExtResource("5_pnsf0")
 [node name="Walk" type="AudioStreamPlayer3D" parent="WalkAudio"]
 stream = ExtResource("6_qo3sc")
 volume_db = 10.619
+
+[node name="FloorRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+target_position = Vector3(0, -8, 0)
