@@ -11,6 +11,11 @@ func _process(delta):
 	pass
 
 func _unhandled_key_input(event):
+	if event.is_pressed() and event.physical_keycode == KEY_K:
+		if Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		else:
+			Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	if event.is_pressed() and event.physical_keycode == KEY_F:
 		if DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_WINDOWED:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_EXCLUSIVE_FULLSCREEN)
