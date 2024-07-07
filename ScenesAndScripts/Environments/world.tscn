@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b8i2al5jacohu"]
+[gd_scene load_steps=13 format=3 uid="uid://b8i2al5jacohu"]
 
 [ext_resource type="PackedScene" uid="uid://b223a2ai2d6bq" path="res://ScenesAndScripts/Environments/ModularBlocks/square.tscn" id="1_5df2j"]
 [ext_resource type="PackedScene" uid="uid://cx2024ts6gqsk" path="res://ScenesAndScripts/Environments/ModularBlocks/bigrect.tscn" id="2_h0nmp"]
@@ -23,6 +23,9 @@ size = Vector3(5, 0.5, 5)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_es7so"]
 size = Vector3(10, 2.5, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_8tof5"]
+size = Vector3(10, 1, 1)
 
 [node name="World" type="Node3D"]
 
@@ -87,5 +90,14 @@ size = Vector3(10, 2.5, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LongWall"]
 shape = SubResource("BoxShape3D_es7so")
+
+[node name="LongWall2" type="StaticBody3D" parent="."]
+transform = Transform3D(0.748493, 0, -0.663143, 0, 1, 0, 0.663143, 0, 0.748493, -6.40212, 3.87063, 2.3298)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="LongWall2"]
+size = Vector3(10, 1, 1)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LongWall2"]
+shape = SubResource("BoxShape3D_8tof5")
 
 [editable path="Square2"]
