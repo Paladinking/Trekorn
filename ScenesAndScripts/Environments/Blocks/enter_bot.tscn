@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cos5udjcpiqn0"]
 
 [ext_resource type="Script" path="res://ScenesAndScripts/Environments/Blocks/block.gd" id="1_bwdpt"]
-[ext_resource type="PackedScene" uid="uid://bcyu7asndk7xc" path="res://Assets/Buildings/TempBlockout/enter_bot_1.glb" id="3_4ljt1"]
+[ext_resource type="PackedScene" uid="uid://8rvl0wwvwakf" path="res://Assets/Buildings/TempBlockout/enter_bot_1.glb" id="3_4ljt1"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_jnfjf"]
 size = Vector3(7.5, 4, 7.5)

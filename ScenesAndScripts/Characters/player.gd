@@ -186,8 +186,9 @@ func _process(delta):
 	$Camera.position = camera_position
 	$Camera.look_at(global_position + camera_target_position)
 	$CameraRay.target_position = camera_position
+	$CameraArea.position = camera_position
 
-	if $CameraRay.is_colliding():
+	if $CameraRay.is_colliding() and ($CameraArea.has_overlapping_bodies() or not shoulder_cam):
 		var camera_ray_collision_distance = $CameraRay.position.distance_to($CameraRay.get_collision_point() - $CameraRay.global_position + $CameraRay.position)
 		if camera_ray_collision_distance < max_dist:
 			var to_move_camera = max_dist - camera_ray_collision_distance
