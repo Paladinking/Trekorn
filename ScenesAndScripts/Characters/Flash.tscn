@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dmhqiv7pbug84"]
+[gd_scene load_steps=5 format=3 uid="uid://cby8d6k4pwdeg"]
 
 [ext_resource type="Texture2D" uid="uid://by3kp23nldvf" path="res://Assets/Images/flash.png" id="1_p2dko"]
 
@@ -24,9 +24,7 @@ lightmap_size_hint = Vector2i(7, 7)
 material = SubResource("StandardMaterial3D_6spwl")
 size = Vector2(0.885, 0.94)
 
-[node name="Flash" type="Node3D"]
-
-[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+[node name="Flash" type="GPUParticles3D"]
 emitting = false
 amount = 5
 lifetime = 0.05

@@ -42,6 +42,9 @@ current = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 visible = false
 
+[node name="ag42b" parent="." instance=ExtResource("3_bcbxh")]
+transform = Transform3D(-4.37114e-08, 0.965926, -0.258819, 0, 0.258819, 0.965926, 1, 4.2222e-08, -1.13133e-08, 0.0422084, 1.55605, 0.162422)
+
 [node name="Model" parent="." instance=ExtResource("2_5rm6l")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0422084, 0, 0)
 
