@@ -19,7 +19,7 @@ const WALL_JUMP_MARGIN = 0.25
 var wall_jump_time = 0.0
 var last_collision_direction : Vector3 = Vector3.ZERO
 
-var fall_time: float = 0.0
+const FALL_SCREAM_VELOCITY = -12.0
 
 const CAMERA_MOVE_SPEED = 5
 const CAMERA_MAX_DISTANCE = 10
@@ -156,10 +156,6 @@ func _physics_process(delta):
 		#$Model/AnimationPlayer.pause()
 		#velocity.y -= gravity * delta
 		pass
-	if not is_on_wall() and not is_on_floor():
-		fall_time += delta
-	else:
-		fall_time = 0
 
 	var was_on_floor = is_on_floor()
 	move_and_slide()
@@ -218,9 +214,8 @@ func _process(delta):
 
 	if shoulder_cam:
 		$Model.rotation.y = camera_angle_y
-	if fall_time > 1.4 and not $FallAudio.playing:
-		if not $FloorRay.is_colliding():
-			$FallAudio.play()
+	if velocity.y < FALL_SCREAM_VELOCITY and not $FallAudio.playing:
+		$FallAudio.play()
 	#if $Model/LowerClimbRay.is_colliding():
 		#print("Collission Lower")
 	#if $Model/UpperClimbRay.is_colliding():
