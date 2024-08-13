@@ -24,6 +24,7 @@ const FALL_SCREAM_VELOCITY = -12.0
 const CAMERA_MOVE_SPEED = 5
 const CAMERA_MAX_DISTANCE = 5
 const SHOULDER_MAX_DISTANCE = 3
+const SIGHTS_MAX_DISTANCE = 0.1
 var camera_target_position = Vector3(0, 1.5, 0)
 const CAMERA_WALL_SAFETY_DIST = 1
 var camera_angle_y = 0
@@ -42,9 +43,14 @@ var wall_normal = Vector3(0, 0, 0)
 var can_climb_again = true
 
 var shoot_cooldown: float = 0.0
-var shoulder_cam: bool = false
+enum CAM_MODES { THIRD_PERSON, SHOULDER, SIGHTS }
+var cam_mode: CAM_MODES = CAM_MODES.THIRD_PERSON
+var aiming_down_sights: bool = false
 
-var weapon_pos
+const WEAPON_SHOULDER_POS = Vector3(0, 1.556, 0.162)
+const WEAPON_SHOULDER_ROT = Vector3(deg_to_rad(-75), deg_to_rad(-90), 0)
+const WEAPON_AIMING_POS = Vector3(0.5, 1.5, 0)
+const WEAPON_AIMING_ROT = Vector3.ZERO
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -54,9 +60,6 @@ const flash = preload("res://ScenesAndScripts/Characters/Flash.tscn")
 
 
 func _ready():
-	weapon_pos = $ag42b.position
-	#var rot_y = CAMERA_POSITION.rotated(Vector3.UP, camera_angle_y)
-	#$Camera.position = rot_y.rotated(Vector3.UP.cross(rot_y).normalized(), camera_angle_x)
 	camera_target_position = $CameraRay.position
 	$Camera.position = Vector3(sin(camera_angle_y), camera_angle_x, cos(camera_angle_y)) * CAMERA_MAX_DISTANCE
 	$Camera.look_at(global_position + camera_target_position)
@@ -66,9 +69,6 @@ func _ready():
 
 
 func _physics_process(delta):
-	if Input.is_action_just_pressed("aim"):
-		shoulder_cam = not shoulder_cam
-
 	input_dir = Input.get_vector("go_left", "go_right", "go_forward", "go_backward")
 	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).rotated(Vector3.UP, camera_angle_y)
 	if not direction.is_zero_approx():
@@ -121,7 +121,7 @@ func _physics_process(delta):
 		velocity.y = JUMP_VELOCITY
 		$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
 
-		if not shoulder_cam:
+		if cam_mode == CAM_MODES.THIRD_PERSON:
 			$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
 
 	if not is_on_floor() and not is_climbing:
@@ -156,7 +156,7 @@ func _physics_process(delta):
 	var new_velocity = Vector3(velocity.x, 0, velocity.z).move_toward(direction * current_speed, delta * current_acceleration)
 	velocity.x = new_velocity.x
 	velocity.z = new_velocity.z
-	if not direction.is_zero_approx() and not shoulder_cam and is_on_floor():
+	if not direction.is_zero_approx() and cam_mode == CAM_MODES.THIRD_PERSON and is_on_floor():
 		$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.FORWARD, Vector3.UP)
 
 	var was_on_floor = is_on_floor()
@@ -166,6 +166,17 @@ func _physics_process(delta):
 
 
 func _process(delta):
+	if Input.is_action_just_pressed("aim"):
+		match cam_mode:
+			CAM_MODES.THIRD_PERSON:
+				cam_mode = CAM_MODES.SIGHTS if aiming_down_sights else CAM_MODES.SHOULDER
+				$Model/ag42b.position = WEAPON_AIMING_POS
+				$Model/ag42b.rotation = WEAPON_AIMING_ROT
+			_:
+				cam_mode = CAM_MODES.THIRD_PERSON
+				$Model/ag42b.position = WEAPON_SHOULDER_POS
+				$Model/ag42b.rotation = WEAPON_SHOULDER_ROT
+
 	if Input.is_action_pressed("look_up") or Input.is_action_pressed("look_down") or \
 		Input.is_action_pressed("look_right") or Input.is_action_pressed("look_left"):
 		camera_angle_y -= (Input.get_action_strength("look_right") - Input.get_action_strength("look_left")) * delta * CAMERA_MOVE_SPEED
@@ -177,29 +188,44 @@ func _process(delta):
 		camera_angle_x += (Input.get_action_strength("look_up") - Input.get_action_strength("look_down")) * delta * CAMERA_MOVE_SPEED
 		camera_angle_x = clamp(camera_angle_x, CAMERA_ANGLE_X_MIN, CAMERA_ANGLE_X_MAX)
 
-	#var rot_y = CAMERA_POSITION.rotated(Vector3.UP, camera_angle_y)
-	#$Camera.position = rot_y.rotated(Vector3.UP.cross(rot_y).normalized(), camera_angle_x)
 	var max_dist = CAMERA_MAX_DISTANCE
-	if shoulder_cam:
-		max_dist = SHOULDER_MAX_DISTANCE
-		$CameraRay.position = Vector3(0.5, 1.5, 0).rotated(Vector3.UP, $Model.rotation.y)
-		camera_target_position = Vector3(0.5, 1.5, 0).rotated(Vector3.UP, $Model.rotation.y)
-	else:
+	var camera_position
+
+	if cam_mode == CAM_MODES.THIRD_PERSON:
 		$CameraRay.position = Vector3(0, 1.5, 0)
 		camera_target_position = Vector3(0, 1.5, 0)
+		camera_position = Vector3(0, 1.5, 0) + Vector3(
+			sin(camera_angle_x) * sin(camera_angle_y),
+			-cos(camera_angle_x),
+			sin(camera_angle_x) * cos(camera_angle_y)) * max_dist
 
-	var camera_position = Vector3(
-		sin(camera_angle_x) * sin(camera_angle_y),
-		-cos(camera_angle_x),
-		sin(camera_angle_x) * cos(camera_angle_y)) * max_dist
-	if shoulder_cam:
-		camera_position += Vector3(0.5, 0, 0).rotated(Vector3.UP, $Model.rotation.y)
+	elif cam_mode == CAM_MODES.SHOULDER:
+		$Model/ag42b.rotation.x = -camera_angle_x + PI / 2
+		max_dist = SHOULDER_MAX_DISTANCE
+		$CameraRay.position = Vector3(0.5, 1.5, 0).rotated(Vector3.UP, camera_angle_y)
+		camera_target_position = Vector3(0.5, 1.5, 0).rotated(Vector3.UP, camera_angle_y)
+		camera_position = Vector3(0.5, 1.5, 0).rotated(Vector3.UP, camera_angle_y) + Vector3(
+			sin(camera_angle_x) * sin(camera_angle_y),
+			-cos(camera_angle_x),
+			sin(camera_angle_x) * cos(camera_angle_y)) * max_dist
+
+	elif cam_mode == CAM_MODES.SIGHTS:
+		$Model/ag42b.rotation.x = -camera_angle_x + PI / 2
+		max_dist = SIGHTS_MAX_DISTANCE
+		camera_position = Vector3(0, 0.0825, 0.025).rotated(Vector3.RIGHT, -camera_angle_x + PI / 2).rotated(Vector3.UP, camera_angle_y) + \
+			$Model/ag42b.position.rotated(Vector3.UP, camera_angle_y) + Vector3(
+				sin(camera_angle_x) * sin(camera_angle_y),
+				-cos(camera_angle_x),
+				sin(camera_angle_x) * cos(camera_angle_y)) * max_dist
+		$CameraRay.position = camera_position
+		camera_target_position = camera_position + Vector3(0, 0, -1).rotated(Vector3.RIGHT, -camera_angle_x + PI / 2).rotated(Vector3.UP, camera_angle_y)
+
 	$Camera.position = camera_position
 	$Camera.look_at(global_position + camera_target_position)
 	$CameraRay.target_position = camera_position
 	$CameraArea.position = camera_position
 
-	if $CameraRay.is_colliding() and ($CameraArea.has_overlapping_bodies() or not shoulder_cam):
+	if $CameraRay.is_colliding() and ($CameraArea.has_overlapping_bodies() or cam_mode == CAM_MODES.THIRD_PERSON):
 		var camera_ray_collision_distance = $CameraRay.position.distance_to($CameraRay.get_collision_point() - $CameraRay.global_position + $CameraRay.position)
 		if camera_ray_collision_distance < max_dist:
 			var to_move_camera = max_dist - camera_ray_collision_distance
@@ -213,33 +239,25 @@ func _process(delta):
 	elif not $Model.is_visible_in_tree():
 		$Model.show()
 
-	if shoulder_cam and not is_climbing:
+	if (cam_mode == CAM_MODES.SHOULDER or cam_mode == CAM_MODES.SIGHTS) and not is_climbing:
+		if Input.is_action_just_pressed("aim_down_sights"):
+			cam_mode = CAM_MODES.SIGHTS if cam_mode == CAM_MODES.SHOULDER else CAM_MODES.SHOULDER
 		$Model.rotation.y = camera_angle_y
-		$Model/ag42b.hide()
-		$ag42b.show()
-		
-		$ag42b.basis = $Camera.basis
-		$ag42b.position = camera_target_position
-	else:
-		$Model/ag42b.show()
-		$ag42b.hide()
 
 	if velocity.y < FALL_SCREAM_VELOCITY and not $FallAudio.playing:
 		$FallAudio.play()
-		$ag42b.basis = $Model.basis
-		$ag42b.position = weapon_pos
 
-	if shoulder_cam and Input.is_action_pressed("shoot") and shoot_cooldown <= 0:
+	if (cam_mode == CAM_MODES.SHOULDER or cam_mode == CAM_MODES.SIGHTS) and Input.is_action_pressed("shoot") and shoot_cooldown <= 0:
 		var b = bullet.instantiate()
 		var f = flash.instantiate()
 		get_tree().root.add_child(f)
-		var dir: Vector3 = -$ag42b.basis.z
-		b.position = to_global($ag42b.position + 2 * dir)
+		var dir: Vector3 = -$Model/ag42b.global_basis.z
+		b.position = to_global($Model/ag42b.position + 2 * dir)
 		f.position = b.position
 		f.emitting = true
 		f.finished.connect(f.queue_free)
 		b.player_pos = to_global(camera_target_position)
-		b.linear_velocity = -$ag42b.global_basis.z * 100
+		b.linear_velocity = -$Model/ag42b.global_basis.z * 100
 		velocity -= 5 * dir
 		get_tree().root.add_child(b)
 		shoot_cooldown = SHOOT_COOLDOWN
