@@ -42,17 +42,20 @@ const CAMERA_FOV_SHOULDER = 50.0
 const CAMERA_FOV_ADS = 25.0
 
 const CAMERA_SPEED_TURN = 5.0
-const CAMERA_SPEED_ZOOM = 20.0
-const CAMERA_SPEED_FOV = 100.0
+#const CAMERA_SPEED_ZOOM = 20.0
+#const CAMERA_SPEED_FOV = 100.0
+const CAMERA_SPEED_ADS = 0.25   # ADS time in seconds
+var camera_speed_max_dist = 1.0
+var camera_speed_fov = 1.0
 
 const CAMERA_MAX_DIST_TPP = 5.0
 const CAMERA_MAX_DIST_SHOULDER = 3.0
 const CAMERA_MAX_DIST_ADS = 0.1
+const CAMERA_WALL_SAFETY_DIST = 1.0
 
 const CAMERA_CENTER_POSITION_TPP = Vector3(0, 1.5, 0)
 var camera_target_position_variable : float = 0.0 # 0 means camera target is character, 1 means camera target is gun
 var camera_max_dist = CAMERA_MAX_DIST_TPP
-const CAMERA_WALL_SAFETY_DIST = 1.0
 
 var camera_angle_y = 0.0
 var camera_angle_x = deg_to_rad(90)
@@ -86,9 +89,10 @@ func _ready():
 
 func _physics_process(delta):
 	input_dir = Input.get_vector("go_left", "go_right", "go_forward", "go_backward")
-	direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).rotated(Vector3.UP, camera_angle_y)
-	if not direction.is_zero_approx():
-		$InputDirection.rotation.y = -Vector3(direction.x, 0, direction.z).signed_angle_to(Vector3.FORWARD, Vector3.UP)
+	#direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).rotated(Vector3.UP, camera_angle_y)
+	direction = (Vector3(input_dir.x, 0, input_dir.y)).rotated(Vector3.UP, camera_angle_y)
+	#if not direction.is_zero_approx():
+		#$InputDirection.rotation.y = -Vector3(direction.x, 0, direction.z).signed_angle_to(Vector3.FORWARD, Vector3.UP)
 
 	current_speed = SPEED
 	current_acceleration = ACCELERATION
@@ -187,12 +191,14 @@ func _process(delta):
 		match camera_mode:
 			CAMERA_MODES.TPP:
 				camera_mode = CAMERA_MODES.ADS if aiming_down_sights else CAMERA_MODES.SHOULDER
-				#$Camera.fov = CAMERA_FOV_SHOULDER
+				camera_speed_max_dist = abs(camera_max_dist - (CAMERA_MAX_DIST_ADS if camera_mode == CAMERA_MODES.ADS else CAMERA_MAX_DIST_SHOULDER)) / (CAMERA_SPEED_ADS * (1 - camera_target_position_variable))
+				camera_speed_fov = abs($Camera.fov - (CAMERA_FOV_ADS if camera_mode == CAMERA_MODES.ADS else CAMERA_FOV_SHOULDER)) / (CAMERA_SPEED_ADS * (1 - camera_target_position_variable))
 				$Model/ag42b.position = WEAPON_AIMING_POS
 				$Model/ag42b.rotation = WEAPON_AIMING_ROT
 			_:
 				camera_mode = CAMERA_MODES.TPP
-				#$Camera.fov = CAMERA_FOV_TPP
+				camera_speed_max_dist = abs(CAMERA_MAX_DIST_TPP - camera_max_dist) / (CAMERA_SPEED_ADS * camera_target_position_variable)
+				camera_speed_fov = abs(CAMERA_FOV_TPP - $Camera.fov) / (CAMERA_SPEED_ADS * camera_target_position_variable)
 				$Model/ag42b.position = WEAPON_SHOULDER_POS
 				$Model/ag42b.rotation = WEAPON_SHOULDER_ROT
 
@@ -201,7 +207,8 @@ func _process(delta):
 	if (camera_mode == CAMERA_MODES.SHOULDER or camera_mode == CAMERA_MODES.ADS) and not is_climbing:
 		if Input.is_action_just_pressed("aim_down_sights"):
 			camera_mode = CAMERA_MODES.ADS if camera_mode == CAMERA_MODES.SHOULDER else CAMERA_MODES.SHOULDER
-			#$Camera.fov = CAMERA_FOV_ADS if camera_mode == CAMERA_MODES.SHOULDER else CAMERA_FOV_SHOULDER
+			camera_speed_max_dist = abs(camera_max_dist - (CAMERA_MAX_DIST_ADS if camera_mode == CAMERA_MODES.ADS else CAMERA_MAX_DIST_SHOULDER)) / (CAMERA_SPEED_ADS * (camera_target_position_variable if camera_target_position_variable > 0.5 else (1 - camera_target_position_variable)))
+			camera_speed_fov = abs($Camera.fov - (CAMERA_FOV_ADS if camera_mode == CAMERA_MODES.ADS else CAMERA_FOV_SHOULDER)) / (CAMERA_SPEED_ADS * (camera_target_position_variable if camera_target_position_variable > 0.5 else (1 - camera_target_position_variable)))
 		$Model.rotation.y = camera_angle_y
 
 	if velocity.y < FALL_SCREAM_VELOCITY and not $FallAudio.playing:
@@ -230,10 +237,10 @@ func handle_camera(delta):
 	if Input.is_action_pressed("look_up") or Input.is_action_pressed("look_down") or \
 		Input.is_action_pressed("look_right") or Input.is_action_pressed("look_left"):
 		camera_angle_y -= (Input.get_action_strength("look_right") - Input.get_action_strength("look_left")) * delta * CAMERA_SPEED_TURN
-		if camera_angle_y > 2 * PI:
-			camera_angle_y -= 2 * PI
-		elif camera_angle_y < -2 * PI:
-			camera_angle_y += 2 * PI
+		if camera_angle_y > 2.0 * PI:
+			camera_angle_y -= 2.0 * PI
+		elif camera_angle_y < 0.0:
+			camera_angle_y += 2.0 * PI
 		camera_angle_x += (Input.get_action_strength("look_up") - Input.get_action_strength("look_down")) * delta * CAMERA_SPEED_TURN
 		camera_angle_x = clamp(camera_angle_x, CAMERA_ANGLE_X_MIN, CAMERA_ANGLE_X_MAX)
 
@@ -242,20 +249,20 @@ func handle_camera(delta):
 
 	if camera_mode == CAMERA_MODES.TPP:
 		$CameraRay.position = Vector3(0, 1.5, 0)
-		$Camera.fov = move_toward($Camera.fov, CAMERA_FOV_TPP, CAMERA_SPEED_FOV * delta)
+		$Camera.fov = move_toward($Camera.fov, CAMERA_FOV_TPP, camera_speed_fov * delta)
 		camera_max_dist = move_toward(camera_max_dist,
 			CAMERA_MAX_DIST_TPP,
-			CAMERA_SPEED_ZOOM * delta)
-		camera_target_position_variable = move_toward(camera_target_position_variable, 0.0, CAMERA_SPEED_ZOOM * delta)
+			camera_speed_max_dist * delta)
+		camera_target_position_variable = move_toward(camera_target_position_variable, 0.0, (1.0 / CAMERA_SPEED_ADS) * delta)
 	else:    # same as elif camera_mode == CAMERA_MODES.SHOULDER or camera_mode == CAMERA_MODES.ADS:
 		$Model/ag42b.rotation.x = -camera_angle_x + PI / 2
 		$CameraRay.position = WEAPON_AIMING_POS.rotated(Vector3.UP, camera_angle_y) + \
 			Vector3(0, 0.0825, 0.025).rotated(Vector3.RIGHT, -camera_angle_x + PI / 2).rotated(Vector3.UP, camera_angle_y)
-		$Camera.fov = move_toward($Camera.fov, CAMERA_FOV_SHOULDER if camera_mode == CAMERA_MODES.SHOULDER else CAMERA_FOV_ADS, CAMERA_SPEED_FOV * delta)
+		$Camera.fov = move_toward($Camera.fov, CAMERA_FOV_SHOULDER if camera_mode == CAMERA_MODES.SHOULDER else CAMERA_FOV_ADS, camera_speed_fov * delta)
 		camera_max_dist = move_toward(camera_max_dist,
 			CAMERA_MAX_DIST_SHOULDER if camera_mode == CAMERA_MODES.SHOULDER else CAMERA_MAX_DIST_ADS,
-			CAMERA_SPEED_ZOOM * delta)
-		camera_target_position_variable = move_toward(camera_target_position_variable, 1.0, CAMERA_SPEED_ZOOM * delta)
+			camera_speed_max_dist * delta)
+		camera_target_position_variable = move_toward(camera_target_position_variable, 1.0, (1.0 / CAMERA_SPEED_ADS) * delta)
 
 	if camera_target_position_variable == 0.0:    # Common edge case
 		camera_position = Vector3(0, 1.5, 0) + Vector3(
@@ -308,10 +315,10 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		camera_angle_x += event.relative.y / 200
 		camera_angle_y -= event.relative.x / 200
-		if camera_angle_y > 2 * PI:
-			camera_angle_y -= 2 * PI
-		elif camera_angle_y < -2 * PI:
-			camera_angle_y += 2 * PI
+		if camera_angle_y > 2.0 * PI:
+			camera_angle_y -= 2.0 * PI
+		elif camera_angle_y < 0.0:
+			camera_angle_y += 2.0 * PI
 		camera_angle_x = clamp(camera_angle_x, CAMERA_ANGLE_X_MIN, CAMERA_ANGLE_X_MAX)
 
 
