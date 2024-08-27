@@ -73,9 +73,6 @@ const WEAPON_AIMING_ROT = Vector3.ZERO
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-const bullet = preload("res://ScenesAndScripts/Characters/bullet.tscn")
-const flash = preload("res://ScenesAndScripts/Characters/Flash.tscn")
-
 
 
 func _ready():
@@ -193,14 +190,14 @@ func _process(delta):
 				camera_mode = CAMERA_MODES.ADS if aiming_down_sights else CAMERA_MODES.SHOULDER
 				camera_speed_max_dist = abs(camera_max_dist - (CAMERA_MAX_DIST_ADS if camera_mode == CAMERA_MODES.ADS else CAMERA_MAX_DIST_SHOULDER)) / (CAMERA_SPEED_ADS * (1 - camera_target_position_variable))
 				camera_speed_fov = abs($Camera.fov - (CAMERA_FOV_ADS if camera_mode == CAMERA_MODES.ADS else CAMERA_FOV_SHOULDER)) / (CAMERA_SPEED_ADS * (1 - camera_target_position_variable))
-				$Model/ag42b.position = WEAPON_AIMING_POS
-				$Model/ag42b.rotation = WEAPON_AIMING_ROT
+				$Model/Ag42b.position = WEAPON_AIMING_POS
+				$Model/Ag42b.rotation = WEAPON_AIMING_ROT
 			_:
 				camera_mode = CAMERA_MODES.TPP
 				camera_speed_max_dist = abs(CAMERA_MAX_DIST_TPP - camera_max_dist) / (CAMERA_SPEED_ADS * camera_target_position_variable)
 				camera_speed_fov = abs(CAMERA_FOV_TPP - $Camera.fov) / (CAMERA_SPEED_ADS * camera_target_position_variable)
-				$Model/ag42b.position = WEAPON_SHOULDER_POS
-				$Model/ag42b.rotation = WEAPON_SHOULDER_ROT
+				$Model/Ag42b.position = WEAPON_SHOULDER_POS
+				$Model/Ag42b.rotation = WEAPON_SHOULDER_ROT
 
 	handle_camera(delta)
 
@@ -214,21 +211,10 @@ func _process(delta):
 	if velocity.y < FALL_SCREAM_VELOCITY and not $FallAudio.playing:
 		$FallAudio.play()
 
-	if (camera_mode == CAMERA_MODES.SHOULDER or camera_mode == CAMERA_MODES.ADS) and Input.is_action_pressed("shoot") and shoot_cooldown <= 0:
-		var b = bullet.instantiate()
-		var f = flash.instantiate()
-		get_tree().root.add_child(f)
-		var dir: Vector3 = -$Model/ag42b.global_basis.z
-		b.position = to_global($Model/ag42b.position + 2 * dir)
-		f.position = b.position
-		f.emitting = true
-		f.finished.connect(f.queue_free)
-		b.player_pos = to_global(CAMERA_CENTER_POSITION_TPP)
-		b.linear_velocity = -$Model/ag42b.global_basis.z * 100
-		velocity -= 5 * dir
-		get_tree().root.add_child(b)
+	if Input.is_action_pressed("shoot") and (camera_mode == CAMERA_MODES.SHOULDER or camera_mode == CAMERA_MODES.ADS) and shoot_cooldown <= 0:
+		$Model/Ag42b.fire()
+		velocity -= 5 * -$Model/Ag42b.global_basis.z
 		shoot_cooldown = SHOOT_COOLDOWN
-		$ShootAudio.play()
 	shoot_cooldown -= delta
 
 
@@ -236,12 +222,12 @@ func _process(delta):
 func handle_camera(delta):
 	if Input.is_action_pressed("look_up") or Input.is_action_pressed("look_down") or \
 		Input.is_action_pressed("look_right") or Input.is_action_pressed("look_left"):
-		camera_angle_y -= (Input.get_action_strength("look_right") - Input.get_action_strength("look_left")) * delta * CAMERA_SPEED_TURN
+		camera_angle_y -= pow(Input.get_action_strength("look_right") - Input.get_action_strength("look_left"), 2) * delta * CAMERA_SPEED_TURN * sign(Input.get_action_strength("look_right") - Input.get_action_strength("look_left"))
 		if camera_angle_y > 2.0 * PI:
 			camera_angle_y -= 2.0 * PI
 		elif camera_angle_y < 0.0:
 			camera_angle_y += 2.0 * PI
-		camera_angle_x += (Input.get_action_strength("look_up") - Input.get_action_strength("look_down")) * delta * CAMERA_SPEED_TURN
+		camera_angle_x += pow(Input.get_action_strength("look_up") - Input.get_action_strength("look_down"), 2) * delta * CAMERA_SPEED_TURN * sign(Input.get_action_strength("look_up") - Input.get_action_strength("look_down"))
 		camera_angle_x = clamp(camera_angle_x, CAMERA_ANGLE_X_MIN, CAMERA_ANGLE_X_MAX)
 
 	var camera_position
@@ -255,7 +241,7 @@ func handle_camera(delta):
 			camera_speed_max_dist * delta)
 		camera_target_position_variable = move_toward(camera_target_position_variable, 0.0, (1.0 / CAMERA_SPEED_ADS) * delta)
 	else:    # same as elif camera_mode == CAMERA_MODES.SHOULDER or camera_mode == CAMERA_MODES.ADS:
-		$Model/ag42b.rotation.x = -camera_angle_x + PI / 2
+		$Model/Ag42b.rotation.x = -camera_angle_x + PI / 2
 		$CameraRay.position = WEAPON_AIMING_POS.rotated(Vector3.UP, camera_angle_y) + \
 			Vector3(0, 0.0825, 0.025).rotated(Vector3.RIGHT, -camera_angle_x + PI / 2).rotated(Vector3.UP, camera_angle_y)
 		$Camera.fov = move_toward($Camera.fov, CAMERA_FOV_SHOULDER if camera_mode == CAMERA_MODES.SHOULDER else CAMERA_FOV_ADS, camera_speed_fov * delta)
