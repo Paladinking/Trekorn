@@ -10,6 +10,8 @@ const max_bullet_trails: int = 500
 const trail_step_size: float = 0.05
 const max_bullet_dist: float = 5000
 
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	contact_monitor = true

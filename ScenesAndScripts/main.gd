@@ -6,9 +6,6 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 func _unhandled_key_input(event):
 	if event.is_pressed() and event.physical_keycode == KEY_K:

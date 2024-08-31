@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://f0imj174l2fx"]
+[gd_scene load_steps=12 format=3 uid="uid://f0imj174l2fx"]
 
 [ext_resource type="Script" path="res://ScenesAndScripts/Characters/player.gd" id="1_pmtne"]
 [ext_resource type="PackedScene" uid="uid://c4obqn0n00js2" path="res://ScenesAndScripts/Characters/main_character.tscn" id="2_5rm6l"]
@@ -7,6 +7,8 @@
 [ext_resource type="AudioStream" uid="uid://b0284nxybi6io" path="res://Assets/Audio/dead.mp3" id="4_p7fue"]
 [ext_resource type="Script" path="res://ScenesAndScripts/Characters/walk_audio.gd" id="5_pnsf0"]
 [ext_resource type="AudioStream" uid="uid://b0a1yvhp3f3hx" path="res://Assets/Audio/Step.mp3" id="6_qo3sc"]
+[ext_resource type="AudioStream" uid="uid://d30bo2dxl6n70" path="res://Assets/Audio/slow_motion.mp3" id="8_elxk6"]
+[ext_resource type="AudioStream" uid="uid://c6rpdyrb82xaq" path="res://Assets/Audio/slow_motion_reverse.mp3" id="9_aua7i"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_obfn4"]
 radius = 0.25
@@ -21,11 +23,6 @@ script = ExtResource("1_pmtne")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_obfn4")
-
-[node name="CSGModel" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-visible = false
-size = Vector3(1, 2, 1)
 
 [node name="CameraArea" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4, 5)
@@ -73,3 +70,11 @@ script = ExtResource("5_pnsf0")
 [node name="Walk" type="AudioStreamPlayer3D" parent="WalkAudio"]
 stream = ExtResource("6_qo3sc")
 volume_db = 10.619
+
+[node name="SlowMotionAudio" type="Node" parent="."]
+
+[node name="Forward" type="AudioStreamPlayer" parent="SlowMotionAudio"]
+stream = ExtResource("8_elxk6")
+
+[node name="Reverse" type="AudioStreamPlayer" parent="SlowMotionAudio"]
+stream = ExtResource("9_aua7i")

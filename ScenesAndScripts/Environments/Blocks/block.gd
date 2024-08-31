@@ -14,8 +14,3 @@ func _ready():
 		child.position = pos
 		child.rotation = rot
 		add_child(child)
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass

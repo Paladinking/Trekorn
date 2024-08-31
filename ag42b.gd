@@ -5,13 +5,14 @@ const flash = preload("res://ScenesAndScripts/Characters/Flash.tscn")
 
 const BULLET_START_POSITION = Vector3(0.0, 0.05, -0.85)
 
+var game_speed = 1.0
+
 
 
 func fire():
 	var b = bullet.instantiate()
 	var f = flash.instantiate()
 	get_tree().root.add_child(f)
-	var dir: Vector3 = -global_basis.z
 	b.position = to_global(BULLET_START_POSITION)
 	f.position = b.position
 	f.emitting = true

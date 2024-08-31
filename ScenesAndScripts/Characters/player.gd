@@ -63,6 +63,13 @@ const CAMERA_ANGLE_X_MAX = deg_to_rad(179)
 const CAMERA_ANGLE_X_MIN = deg_to_rad(45)
 
 
+# Slow-motion stuff
+const GAME_SPEED_DEFAULT = 1.0
+const GAME_SPEED_SLOW_MOTION = 0.25
+const GAME_SPEED_SLOWDOWN_SPEED = 0.75  # in seconds to finish the slow motion effect
+var game_speed_target = GAME_SPEED_DEFAULT
+
+
 # Weapon stuff
 const WEAPON_SHOULDER_POS = Vector3(0, 1.556, 0.162)
 const WEAPON_SHOULDER_ROT = Vector3(deg_to_rad(-75), deg_to_rad(-90), 0)
@@ -184,6 +191,15 @@ func _physics_process(delta):
 
 
 func _process(delta):
+	handle_camera(delta)
+
+	if (camera_mode == CAMERA_MODES.SHOULDER or camera_mode == CAMERA_MODES.ADS) and not is_climbing:
+		if Input.is_action_just_pressed("aim_down_sights"):
+			camera_mode = CAMERA_MODES.ADS if camera_mode == CAMERA_MODES.SHOULDER else CAMERA_MODES.SHOULDER
+			camera_speed_max_dist = abs(camera_max_dist - (CAMERA_MAX_DIST_ADS if camera_mode == CAMERA_MODES.ADS else CAMERA_MAX_DIST_SHOULDER)) / (CAMERA_SPEED_ADS * (camera_target_position_variable if camera_target_position_variable > 0.5 else (1 - camera_target_position_variable)))
+			camera_speed_fov = abs($Camera.fov - (CAMERA_FOV_ADS if camera_mode == CAMERA_MODES.ADS else CAMERA_FOV_SHOULDER)) / (CAMERA_SPEED_ADS * (camera_target_position_variable if camera_target_position_variable > 0.5 else (1 - camera_target_position_variable)))
+		$Model.rotation.y = camera_angle_y
+
 	if Input.is_action_just_pressed("aim"):
 		match camera_mode:
 			CAMERA_MODES.TPP:
@@ -199,15 +215,6 @@ func _process(delta):
 				$Model/Ag42b.position = WEAPON_SHOULDER_POS
 				$Model/Ag42b.rotation = WEAPON_SHOULDER_ROT
 
-	handle_camera(delta)
-
-	if (camera_mode == CAMERA_MODES.SHOULDER or camera_mode == CAMERA_MODES.ADS) and not is_climbing:
-		if Input.is_action_just_pressed("aim_down_sights"):
-			camera_mode = CAMERA_MODES.ADS if camera_mode == CAMERA_MODES.SHOULDER else CAMERA_MODES.SHOULDER
-			camera_speed_max_dist = abs(camera_max_dist - (CAMERA_MAX_DIST_ADS if camera_mode == CAMERA_MODES.ADS else CAMERA_MAX_DIST_SHOULDER)) / (CAMERA_SPEED_ADS * (camera_target_position_variable if camera_target_position_variable > 0.5 else (1 - camera_target_position_variable)))
-			camera_speed_fov = abs($Camera.fov - (CAMERA_FOV_ADS if camera_mode == CAMERA_MODES.ADS else CAMERA_FOV_SHOULDER)) / (CAMERA_SPEED_ADS * (camera_target_position_variable if camera_target_position_variable > 0.5 else (1 - camera_target_position_variable)))
-		$Model.rotation.y = camera_angle_y
-
 	if velocity.y < FALL_SCREAM_VELOCITY and not $FallAudio.playing:
 		$FallAudio.play()
 
@@ -216,6 +223,25 @@ func _process(delta):
 		velocity -= 5 * -$Model/Ag42b.global_basis.z
 		shoot_cooldown = SHOOT_COOLDOWN
 	shoot_cooldown -= delta
+
+	if Input.is_action_just_pressed("slow_motion"):
+		if game_speed_target == GAME_SPEED_DEFAULT:
+			game_speed_target = GAME_SPEED_SLOW_MOTION
+			$SlowMotionAudio/Forward.play(1.0 - ((Engine.time_scale - GAME_SPEED_SLOW_MOTION) / (1.0 - GAME_SPEED_SLOW_MOTION)))
+			$SlowMotionAudio/Reverse.stop()
+		else:
+			game_speed_target = GAME_SPEED_DEFAULT
+			$SlowMotionAudio/Reverse.play(((Engine.time_scale - GAME_SPEED_SLOW_MOTION) / (1.0 - GAME_SPEED_SLOW_MOTION)))
+			$SlowMotionAudio/Forward.stop()
+
+	if Engine.time_scale != game_speed_target:
+		var game_speed = move_toward(Engine.time_scale, game_speed_target, (1.0 / GAME_SPEED_SLOWDOWN_SPEED) * delta / Engine.time_scale)
+		Engine.time_scale = game_speed
+		AudioServer.playback_speed_scale = game_speed
+		if $SlowMotionAudio/Forward.playing:
+			$SlowMotionAudio/Forward.pitch_scale = 1.0 / game_speed / GAME_SPEED_SLOWDOWN_SPEED
+		elif $SlowMotionAudio/Reverse.playing:
+			$SlowMotionAudio/Reverse.pitch_scale = 1.0 / game_speed / GAME_SPEED_SLOWDOWN_SPEED
 
 
 
