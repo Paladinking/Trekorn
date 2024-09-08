@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://f0imj174l2fx"]
+[gd_scene load_steps=16 format=3 uid="uid://f0imj174l2fx"]
 
 [ext_resource type="Script" path="res://ScenesAndScripts/Characters/player.gd" id="1_pmtne"]
 [ext_resource type="PackedScene" uid="uid://c4obqn0n00js2" path="res://ScenesAndScripts/Characters/main_character.tscn" id="2_5rm6l"]
@@ -16,12 +16,29 @@ radius = 0.25
 [sub_resource type="SphereShape3D" id="SphereShape3D_nttpy"]
 radius = 0.1
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3jkra"]
+radius = 0.0932644
+height = 0.428247
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_25h68"]
+radius = 0.085
+height = 0.4
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_c8886"]
+radius = 0.085
+height = 0.4
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ifqjf"]
+radius = 0.095
+height = 0.525
+
 [node name="Player" type="CharacterBody3D"]
-collision_layer = 17
+collision_layer = 16
 script = ExtResource("1_pmtne")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+visible = false
 shape = SubResource("CapsuleShape3D_obfn4")
 
 [node name="CameraArea" type="Area3D" parent="."]
@@ -39,6 +56,111 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 visible = false
 
 [node name="Model" parent="." instance=ExtResource("2_5rm6l")]
+
+[node name="Rokoko Video Character_001_Skeleton_Skeleton3D#Skeleton_Skeleton3D#Jigglebone" parent="Model/Skeleton/Skeleton3D" index="1"]
+transform = Transform3D(0.00476293, -0.00775136, -0.00415101, -0.0035979, -0.00602565, 0.00712367, -0.00802307, -0.00189946, -0.00565884, 0.923375, 1.99452, -0.20884)
+enabled = false
+
+[node name="Rokoko Video Character_001_Skeleton_Skeleton3D#Skeleton_Skeleton3D#Jigglebone2" parent="Model/Skeleton/Skeleton3D" index="2"]
+transform = Transform3D(0.00183939, -0.00787753, -0.00587886, -0.00343184, -0.00611922, 0.00712584, -0.00921081, 0.000706818, -0.00382901, 0.849091, 1.93679, -0.227041)
+enabled = false
+
+[node name="Rokoko Video Character_001_Skeleton_Skeleton3D#Skeleton_Skeleton3D#Jigglebone3" parent="Model/Skeleton/Skeleton3D" index="3"]
+transform = Transform3D(-0.00050902, -0.00726233, -0.0068556, -0.00109419, -0.00678262, 0.00726627, -0.00992691, 0.00112, -0.000449391, 0.714846, 2.00561, -0.219862)
+enabled = false
+
+[node name="Rokoko Video Character_001_Skeleton_Skeleton3D#Skeleton_Skeleton3D#Jigglebone4" parent="Model/Skeleton/Skeleton3D" index="4"]
+transform = Transform3D(0.00256355, -0.00889063, -0.00379273, -0.00407119, -0.00455198, 0.00791864, -0.00876662, -0.000485888, -0.00478646, 0.604102, 1.91411, -0.154789)
+enabled = false
+
+[node name="Rokoko Video Character_001_Skeleton_Skeleton3D#Skeleton_Skeleton3D#Jigglebone5" parent="Model/Skeleton/Skeleton3D" index="5"]
+transform = Transform3D(0.00250843, -0.00884552, -0.00393248, -0.003865, -0.00463968, 0.00797089, -0.00887522, -0.000479537, -0.00458263, 0.457427, 1.85119, -0.163379)
+enabled = false
+
+[node name="Rokoko Video Character_001_Skeleton_Skeleton3D#Skeleton_Skeleton3D#Jigglebone6" parent="Model/Skeleton/Skeleton3D" index="6"]
+transform = Transform3D(0.00162918, -0.00972609, 0.00165796, -0.00485076, 0.000673706, 0.00871873, -0.00859162, -0.00222467, -0.00460813, 0.413737, 1.25077, 0.00400552)
+enabled = false
+
+[node name="PhysicalBoneSimulator3D" type="PhysicalBoneSimulator3D" parent="Model/Skeleton/Skeleton3D" index="7"]
+
+[node name="Physical Bone Hips" type="PhysicalBone3D" parent="Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D"]
+transform = Transform3D(91.4739, -39.7209, -7.40095, 39.9367, 91.6644, 1.64414, 6.13096, -4.45965, 99.7122, 2.05454, -2.46253, -106.924)
+collision_layer = 8
+collision_mask = 8
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.000988494, 0.0249355, 0.131559)
+body_offset = Transform3D(99.8275, 5.84323, -0.56538, -1.15574, 10.1195, -99.4799, -5.75563, 99.3149, 10.1696, 0.0273561, 12.834, -3.82006)
+bone_name = "Hips"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone Hips"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_3jkra")
+
+[node name="Physical Bone RightArm" type="PhysicalBone3D" parent="Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D"]
+transform = Transform3D(77.3647, 60.3802, 19.2075, 27.8655, -59.6481, 75.2703, 56.9053, -52.8804, -62.9718, -8.46981, -29.255, -142.94)
+collision_layer = 8
+collision_mask = 8
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.26082e-06, -1.89915e-05, 0.135484)
+body_offset = Transform3D(99.6435, 8.28638, -1.5803, 3.8147e-06, 18.7335, 98.2296, 8.4357, -97.8795, 18.6667, 0.213539, -13.3082, -2.53095)
+bone_name = "RightArm"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone RightArm"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_25h68")
+
+[node name="Physical Bone LeftArm" type="PhysicalBone3D" parent="Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D"]
+transform = Transform3D(-34.2497, -41.1768, -84.4478, -44.9352, 86.1163, -23.7659, 82.5093, 29.8071, -47.9974, 32.946, 14.8477, -139.089)
+collision_layer = 8
+collision_mask = 8
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0250948, -0.0090829, 0.150086)
+body_offset = Transform3D(99.6437, -8.28439, 1.57992, 3.05176e-05, 18.7337, 98.2296, -8.4337, -97.8796, 18.6669, 2.18817, -14.5727, -3.90231)
+bone_name = "LeftArm"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone LeftArm"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_c8886")
+
+[node name="Physical Bone RightThigh" type="PhysicalBone3D" parent="Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D"]
+transform = Transform3D(82.3243, 6.7652, 56.3643, -56.4902, 19.5887, 80.157, -5.61826, -97.829, 19.948, -6.19437, -15.6947, -58.9914)
+collision_layer = 8
+collision_mask = 8
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0072664, 0.242758, -0.00043254)
+body_offset = Transform3D(98.7104, -3.12714, -15.6993, 3.26935, 99.9444, 0.648324, 15.6703, -1.15323, 98.7578, 0.03508, -24.2858, 0.208805)
+bone_name = "RightThigh"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone RightThigh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_ifqjf")
+
+[node name="Physical Bone LeftThigh" type="PhysicalBone3D" parent="Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D"]
+transform = Transform3D(-91.2013, 5.33809, 40.6674, 41.0162, 11.8695, 90.4256, -9.77903e-06, 99.1495, -13.0146, 12.1371, -2.38323, -56.9955)
+collision_layer = 8
+collision_mask = 8
+joint_type = 1
+joint_offset = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00854926, -0.250134, 0.0104143)
+body_offset = Transform3D(76.4467, 2.32651, 64.4244, 1.47421, -99.9718, 1.86089, 64.4495, -0.472841, -76.4594, -0.742555, -25.0384, 0.127001)
+bone_name = "LeftThigh"
+joint_constraints/bias = 0.3
+joint_constraints/damping = 1.0
+joint_constraints/impulse_clamp = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D/Physical Bone LeftThigh"]
+shape = SubResource("CapsuleShape3D_ifqjf")
 
 [node name="Ag42b" parent="Model" instance=ExtResource("3_i5o08")]
 transform = Transform3D(-4.37114e-08, 0.965926, -0.258819, 0, 0.258819, 0.965926, 1, 4.2222e-08, -1.13133e-08, 0, 1.55605, 0.162422)
@@ -78,3 +200,5 @@ stream = ExtResource("8_elxk6")
 
 [node name="Reverse" type="AudioStreamPlayer" parent="SlowMotionAudio"]
 stream = ExtResource("9_aua7i")
+
+[editable path="Model"]

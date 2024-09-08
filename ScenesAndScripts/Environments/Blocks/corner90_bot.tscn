@@ -13,6 +13,7 @@ metadata/Rect = [ExtResource("2_u0cm8")]
 [node name="default" parent="." instance=ExtResource("2_u0cm8")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 9
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_yh51y")

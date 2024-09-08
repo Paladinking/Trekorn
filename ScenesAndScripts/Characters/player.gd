@@ -23,13 +23,15 @@ var wall_jump_time = 0.0
 var last_collision_direction : Vector3 = Vector3.ZERO
 var current_speed = 0
 var current_acceleration = 0
-var direction = Vector3(0, 0, 0)
-var input_dir = Vector3(0, 0, 0)
+var direction = Vector3.ZERO
+var input_dir = Vector3.ZERO
 var start_climb_smoothness = 0
 var ledge_height = 0
 var ledge_leap_cooldown = 0
-var wall_normal = Vector3(0, 0, 0)
+var wall_normal = Vector3.ZERO
 var can_climb_again = true
+
+var ragdolling = false
 
 
 # Camera
@@ -92,11 +94,24 @@ func _ready():
 
 
 func _physics_process(delta):
-	input_dir = Input.get_vector("go_left", "go_right", "go_forward", "go_backward")
-	#direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).rotated(Vector3.UP, camera_angle_y)
-	direction = (Vector3(input_dir.x, 0, input_dir.y)).rotated(Vector3.UP, camera_angle_y)
-	#if not direction.is_zero_approx():
-		#$InputDirection.rotation.y = -Vector3(direction.x, 0, direction.z).signed_angle_to(Vector3.FORWARD, Vector3.UP)
+	#if Input.is_action_just_pressed("ragdoll"):
+		#match ragdolling:
+			#true:
+				#($Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D as PhysicalBoneSimulator3D).physical_bones_stop_simulation()
+				#ragdolling = false
+			#_:
+				#($Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D as PhysicalBoneSimulator3D).physical_bones_start_simulation()
+				#ragdolling = true
+
+	if ragdolling and is_on_floor():
+		input_dir = Vector3.ZERO
+		direction = Vector3.ZERO
+	else:
+		input_dir = Input.get_vector("go_left", "go_right", "go_forward", "go_backward")
+		#direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).rotated(Vector3.UP, camera_angle_y)
+		direction = (Vector3(input_dir.x, 0, input_dir.y)).rotated(Vector3.UP, camera_angle_y)
+		#if not direction.is_zero_approx():
+			#$InputDirection.rotation.y = -Vector3(direction.x, 0, direction.z).signed_angle_to(Vector3.FORWARD, Vector3.UP)
 
 	current_speed = SPEED
 	current_acceleration = ACCELERATION
@@ -121,10 +136,15 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("jump"):
 		if is_on_floor() and not is_climbing:
-			$Model/AnimationPlayer.stop(true)
-			$Model/AnimationPlayer.play("running_jump")
-			jump_time = MAX_JUMP_TIME
-			velocity.y = JUMP_VELOCITY
+			if ragdolling:
+				($Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D as PhysicalBoneSimulator3D).physical_bones_stop_simulation()
+				$Model/AnimationPlayer.play("running_jump")
+				ragdolling = false
+			else:
+				$Model/AnimationPlayer.stop(true)
+				$Model/AnimationPlayer.play("running_jump")
+				jump_time = MAX_JUMP_TIME
+				velocity.y = JUMP_VELOCITY
 		else:
 			jump_press_time = WALL_JUMP_MARGIN
 	elif jump_press_time > 0:
@@ -144,6 +164,9 @@ func _physics_process(delta):
 		velocity += last_collision_direction * JUMP_VELOCITY
 		velocity.y = JUMP_VELOCITY
 		$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
+		if ragdolling:
+			($Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D as PhysicalBoneSimulator3D).physical_bones_stop_simulation()
+			ragdolling = false
 
 		if camera_mode == CAMERA_MODES.TPP:
 			$Model.rotation.y = -Vector3(velocity.x, 0, velocity.z).signed_angle_to(Vector3.RIGHT, Vector3.UP)
@@ -217,6 +240,8 @@ func _process(delta):
 
 	if velocity.y < FALL_SCREAM_VELOCITY and not $FallAudio.playing:
 		$FallAudio.play()
+		($Model/Skeleton/Skeleton3D/PhysicalBoneSimulator3D as PhysicalBoneSimulator3D).physical_bones_start_simulation()
+		ragdolling = true
 
 	if Input.is_action_pressed("shoot") and (camera_mode == CAMERA_MODES.SHOULDER or camera_mode == CAMERA_MODES.ADS) and shoot_cooldown <= 0:
 		$Model/Ag42b.fire()

@@ -2,6 +2,8 @@ class_name Target
 extends CharacterBody3D
 
 
+var dead = false
+
 const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 
@@ -9,9 +11,12 @@ const JUMP_VELOCITY = 4.5
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 func get_shot():
-	$Death.finished.connect(queue_free)
-	$Death.play()
-	hide()
+	if not dead:
+		#$Death.finished.connect(queue_free)
+		$Death.play()
+		#hide()
+		($guardblue/Armature_004/Skeleton3D/PhysicalBoneSimulator3D as PhysicalBoneSimulator3D).physical_bones_start_simulation()
+		dead = true
 
 func _physics_process(delta):
 	# Add the gravity.

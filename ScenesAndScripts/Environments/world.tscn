@@ -51,7 +51,8 @@ adjustment_enabled = true
 adjustment_brightness = 0.95
 adjustment_saturation = 0.66
 
-[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_8p8u2"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_7qiwa"]
+size = Vector3(2500, 0.5, 2500)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_8tof5"]
 size = Vector3(10, 1, 1)
@@ -59,6 +60,7 @@ size = Vector3(10, 1, 1)
 [node name="World" type="Node3D"]
 
 [node name="Floor" type="StaticBody3D" parent="."]
+collision_layer = 9
 
 [node name="CSGBox3D" type="CSGBox3D" parent="Floor"]
 transform = Transform3D(540.557, 0, 0, 0, 0.99722, 0, 0, 0, 609.549, -0.061, -0.25, 0.15)
@@ -75,7 +77,8 @@ size = Vector3(500, 200, 500)
 ambient_color = Color(0.0941176, 0.243137, 0.396078, 1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
-shape = SubResource("WorldBoundaryShape3D_8p8u2")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.25, 0)
+shape = SubResource("BoxShape3D_7qiwa")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.965926, 0.25, -0.0669873, -0.0276334, 0.356955, 0.933713, 0.25734, -0.900046, 0.3517, 0, 10, 1.5)
@@ -91,6 +94,7 @@ transform = Transform3D(0.999992, -0.00333509, -0.00237966, 0.00332621, 0.999987
 
 [node name="LongWall2" type="StaticBody3D" parent="."]
 transform = Transform3D(0.748493, 0, -0.663143, 0, 1, 0, 0.663143, 0, 0.748493, -6.40212, 3.87063, 2.3298)
+collision_layer = 9
 
 [node name="CSGBox3D" type="CSGBox3D" parent="LongWall2"]
 size = Vector3(10, 1, 1)
@@ -132,10 +136,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.6368, -4.41408, -13.3784)
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 17.186, -4.43789, -16.516)
 
 [node name="Walls#GroundBlock" parent="." instance=ExtResource("9_jdqq2")]
-transform = Transform3D(-4.27106e-07, 0, 10.7941, 0, 5, 0, -9.77104, 0, -4.71823e-07, 21.4111, 10.7, -20.746)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 21.4111, 10.7, -20.746)
 
 [node name="Walls#GroundBlock2" parent="." instance=ExtResource("9_jdqq2")]
-transform = Transform3D(-5.23175e-06, 0, 29.1012, 0, 5, 0, -119.689, 0, -1.27205e-06, 41.2369, 11.0598, 10.2388)
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 41.2369, 11.0598, 10.2388)
 
 [node name="Kvarter1" type="Node" parent="."]
 

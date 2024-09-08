@@ -8,6 +8,7 @@ data = PackedVector3Array(-2.491, 38.4112, 7.8907, -0.3866, 38.4112, -0.3866, -0
 [node name="wall_outcorner" instance=ExtResource("1_gyfat")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+collision_layer = 9
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)

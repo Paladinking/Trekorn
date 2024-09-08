@@ -13,6 +13,7 @@ metadata/Rect = [ExtResource("2_dpki1")]
 [node name="default" parent="." instance=ExtResource("2_dpki1")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 9
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00720978, 0.151451, 0.0217643)

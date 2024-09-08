@@ -11,6 +11,7 @@ script = ExtResource("1_gsox3")
 metadata/Rect = [ExtResource("3_kpv8y")]
 
 [node name="StaticBody3DOLD" type="StaticBody3D" parent="."]
+collision_layer = 9
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3DOLD"]
 shape = SubResource("ConcavePolygonShape3D_md7j4")

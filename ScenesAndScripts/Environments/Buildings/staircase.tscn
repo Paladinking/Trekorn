@@ -8,6 +8,7 @@ data = PackedVector3Array(-14.6249, 10.6026, 9.4222, -16.7292, 0, 9.4222, -16.72
 [node name="staircase" instance=ExtResource("1_72fab")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+collision_layer = 9
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 1.02476, 0, 0)

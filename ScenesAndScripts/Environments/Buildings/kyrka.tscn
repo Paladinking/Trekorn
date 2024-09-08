@@ -8,6 +8,7 @@ data = PackedVector3Array(19.9145, -5.1013, 34.5831, 51.6709, -5.1013, 62.775, 5
 [node name="kyrka" instance=ExtResource("1_x1c7l")]
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+collision_layer = 9
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
 transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
